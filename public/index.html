@@ -1889,6 +1889,99 @@
         scroll-behavior: auto !important;
       }
     }
+
+    /* ── About section background effects ── */
+    .about-section {
+      position: relative;
+    }
+
+    /* Gutter words — sit in the dead space left/right of content */
+    .about-bg-words-left,
+    .about-bg-words-right {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      pointer-events: none;
+      z-index: 2;
+      gap: 0;
+    }
+
+    .about-bg-words-left  { left: 8px; }
+    .about-bg-words-right { right: 8px; }
+
+    .about-bg-words-left span,
+    .about-bg-words-right span {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(212, 175, 120, 0.35);
+      white-space: nowrap;
+      writing-mode: vertical-rl;
+      animation: gutterFloat 5s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * 0.7s);
+    }
+
+    .about-bg-words-left  span:nth-child(1) { --i: 0; }
+    .about-bg-words-left  span:nth-child(2) { --i: 1; }
+    .about-bg-words-left  span:nth-child(3) { --i: 2; }
+    .about-bg-words-left  span:nth-child(4) { --i: 3; }
+    .about-bg-words-right span:nth-child(1) { --i: 0; }
+    .about-bg-words-right span:nth-child(2) { --i: 1; }
+    .about-bg-words-right span:nth-child(3) { --i: 2; }
+    .about-bg-words-right span:nth-child(4) { --i: 3; }
+
+    @keyframes gutterFloat {
+      0%, 100% { opacity: 0.25; transform: translateY(0px); }
+      50%       { opacity: 0.6;  transform: translateY(-10px); }
+    }
+
+    /* Marquee */
+    .about-marquee {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      width: 100%;
+      margin-bottom: 2rem;
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+
+    .about-marquee-track {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      animation: marqueeScroll 22s linear infinite;
+    }
+
+    .about-marquee-track span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(212, 175, 120, 0.5);
+      white-space: nowrap;
+    }
+
+    .marquee-dot {
+      color: rgba(212, 175, 120, 0.25) !important;
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .about-section .section-head,
+    .about-section .info-grid {
+      position: relative;
+      z-index: 1;
+    }
   </style>
 </head>
 <body>
@@ -1993,7 +2086,40 @@
         </div>
       </section>
 
-      <section class="section" id="about">
+      <section class="section about-section" id="about">
+
+        <!-- floating gutter words -->
+        <div class="about-bg-words-left" aria-hidden="true">
+          <span>Certified</span>
+          <span>Pioneer</span>
+          <span>Canada</span>
+          <span>Precision</span>
+        </div>
+        <div class="about-bg-words-right" aria-hidden="true">
+          <span>Refined</span>
+          <span>Trusted</span>
+          <span>Corrective</span>
+          <span>Transformative</span>
+        </div>
+
+        <!-- scrolling marquee -->
+        <div class="about-marquee" aria-hidden="true">
+          <div class="about-marquee-track">
+            <span>Certified in Canada</span><span class="marquee-dot">·</span>
+            <span>First &amp; Only in Pakistan</span><span class="marquee-dot">·</span>
+            <span>51,900+ Followers</span><span class="marquee-dot">·</span>
+            <span>Paramedical Pioneer</span><span class="marquee-dot">·</span>
+            <span>Real Results</span><span class="marquee-dot">·</span>
+            <span>No Filters</span><span class="marquee-dot">·</span>
+            <span>Certified in Canada</span><span class="marquee-dot">·</span>
+            <span>First &amp; Only in Pakistan</span><span class="marquee-dot">·</span>
+            <span>51,900+ Followers</span><span class="marquee-dot">·</span>
+            <span>Paramedical Pioneer</span><span class="marquee-dot">·</span>
+            <span>Real Results</span><span class="marquee-dot">·</span>
+            <span>No Filters</span><span class="marquee-dot">·</span>
+          </div>
+        </div>
+
         <div class="section-head">
           <div>
             <div class="section-label">About Huma</div>
@@ -2020,8 +2146,8 @@
       <section class="section" id="services">
         <div class="section-head">
           <div>
-            <div class="section-label">Services</div>
-            <h2>Explore treatments by concern or category.</h2>
+            <div class="section-label">Treatments</div>
+            <h2>Corrective and cosmetic care, tailored to you.</h2>
           </div>
           <div class="section-copy hidden"></div>
         </div>
@@ -2258,8 +2384,8 @@
       <section class="section" id="pricing">
         <div class="section-head">
           <div>
-            <div class="section-label">Booking Paths</div>
-            <h2>Guide visitors into the right consultation type.</h2>
+            <div class="section-label">Book a Consultation</div>
+            <h2>Choose the session that suits your needs.</h2>
           </div>
           <div class="section-copy hidden"></div>
         </div>
@@ -2318,10 +2444,10 @@
       <section class="section" id="reviews">
         <div class="section-head">
           <div>
-            <div class="section-label">Client Reviews</div>
-            <h2>Real feedback shared by clients after their treatments.</h2>
+            <div class="section-label">Client Words</div>
+            <h2>What clients say after their transformation.</h2>
           </div>
-          <div class="section-copy">A selection of real review messages shared on Instagram after microneedling, scar care, pigmentation treatment, and hair restoration sessions.</div>
+          <div class="section-copy">Shared directly by clients on Instagram — after microneedling, scar revision, pigmentation correction, and hair restoration treatments.</div>
         </div>
         <div class="review-grid">
           <article class="review-card">
@@ -2437,8 +2563,8 @@
       <section class="section">
         <div class="section-head">
           <div>
-            <div class="section-label">Studio Story</div>
-            <h2>Clinical artistry presented with real treatment imagery.</h2>
+            <div class="section-label">The Studio</div>
+            <h2>Where precision meets care.</h2>
           </div>
           <div class="section-copy hidden"></div>
         </div>
@@ -2447,7 +2573,7 @@
             <div class="story-panel">
               <div class="section-label">Inside The Studio</div>
               <h3>Precision treatments shaped around healing, refinement, and confidence.</h3>
-              <p>Every visual block here is focused on premium corrective aesthetics rather than generic marketing filler, so the website feels much closer to a real beauty clinic brand.</p>
+              <p>Huma Arshad brings over a decade of corrective expertise to every treatment — working with clients across Pakistan who seek real, lasting change without surgery.</p>
             </div>
             <div class="story-badges">
               <span>Scar Revision</span>
@@ -2475,19 +2601,19 @@
               <div>
                 <div class="service-tag">Scar Focus</div>
                 <h3>Restorative revision</h3>
-                <p>Corrective visual storytelling built around real treatment categories.</p>
+                <p>Surgical scars, trauma marks, and stretch marks — camouflaged with tone-matched precision.</p>
               </div>
             </article>
             <article class="story-feature" style="background-image:url('./assets/facelift-scar.jpg')">
               <div>
                 <div class="service-tag">Facial Work</div>
-                <p>Advanced case-led imagery for surgical and facial scar correction.</p>
+                <p>Post-facelift and facial scar revision — seamlessly blended into surrounding skin.</p>
               </div>
             </article>
             <article class="story-feature" style="background-image:url('./assets/acne-treatment.jpg')">
               <div>
                 <div class="service-tag">Skin Renewal</div>
-                <p>Targeted acne and texture treatments presented in a more polished way.</p>
+                <p>Active acne, hyperpigmentation, and texture damage — treated and restored over multiple sessions.</p>
               </div>
             </article>
           </div>
@@ -3372,6 +3498,48 @@
       }).catch(function () {
         renderLeadPreview(loadInquiry());
       });
+    })();
+  </script>
+
+  <!-- About section gutter words — fixed overlay, visible only when #about is in view -->
+  <div id="about-gutter-left" aria-hidden="true" style="
+    position: fixed; top: 0; left: 0; bottom: 0; width: 56px;
+    display: flex; flex-direction: column; justify-content: center;
+    align-items: center; gap: 2rem;
+    pointer-events: none; z-index: 99;
+    opacity: 0; transition: opacity 0.6s ease;
+  ">
+    <span style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:0s">Certified</span>
+    <span style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:0.7s">Pioneer</span>
+    <span style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:1.4s">Canada</span>
+    <span style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:2.1s">Precision</span>
+  </div>
+  <div id="about-gutter-right" aria-hidden="true" style="
+    position: fixed; top: 0; right: 0; bottom: 0; width: 56px;
+    display: flex; flex-direction: column; justify-content: center;
+    align-items: center; gap: 2rem;
+    pointer-events: none; z-index: 99;
+    opacity: 0; transition: opacity 0.6s ease;
+  ">
+    <span style="writing-mode:vertical-rl;font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:0.3s">Refined</span>
+    <span style="writing-mode:vertical-rl;font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:1s">Trusted</span>
+    <span style="writing-mode:vertical-rl;font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:1.7s">Corrective</span>
+    <span style="writing-mode:vertical-rl;font-size:0.58rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(212,175,120,0.45);animation:gutterFloat 5s ease-in-out infinite;animation-delay:2.4s">Transformative</span>
+  </div>
+  <script>
+    (function() {
+      const aboutSection = document.getElementById('about');
+      const gl = document.getElementById('about-gutter-left');
+      const gr = document.getElementById('about-gutter-right');
+      if (!aboutSection || !gl || !gr) return;
+      const obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          const v = e.isIntersecting ? '1' : '0';
+          gl.style.opacity = v;
+          gr.style.opacity = v;
+        });
+      }, { threshold: 0.1 });
+      obs.observe(aboutSection);
     })();
   </script>
 </body>
