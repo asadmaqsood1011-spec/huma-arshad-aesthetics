@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huma Arshad Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #120c09;
+      --panel: rgba(255, 247, 239, 0.08);
+      --panel-strong: rgba(255, 247, 239, 0.12);
+      --border: rgba(255, 236, 218, 0.14);
+      --text: #fff8f1;
+      --muted: rgba(255, 248, 241, 0.7);
+      --gold: #d4a567;
+      --gold-soft: #efcfab;
+      --success: #ccefd3;
+      --danger: #ffcfcf;
+      --shadow: 0 24px 60px rgba(8, 4, 3, 0.3);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-pill: 999px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(212,165,103,0.18), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(255,239,223,0.08), transparent 28%),
+        linear-gradient(120deg, #140c09, #2a1913 46%, #120b09 100%);
+      padding: 20px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .topbar,
+    .login-card,
+    .sidebar,
+    .panel,
+    .stat-card {
+      background: linear-gradient(180deg, rgba(255, 247, 239, 0.12), rgba(255, 247, 239, 0.05));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .topbar {
+      border-radius: var(--radius-xl);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand h1,
+    .login-card h1,
+    .section-title {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+    }
+
+    .brand h1 { font-size: 2rem; }
+    .brand p { margin: 8px 0 0; color: var(--muted); }
+
+    .button,
+    .ghost {
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button {
+      color: #241711;
+      background: linear-gradient(135deg, #f0d4ae, #d4a567);
+    }
+
+    .ghost {
+      color: var(--text);
+      background: rgba(255, 247, 239, 0.06);
+      border-color: var(--border);
+    }
+
+    .login-wrap {
+      min-height: calc(100vh - 120px);
+      display: grid;
+      place-items: center;
+    }
+
+    .login-card {
+      width: min(520px, 100%);
+      border-radius: 28px;
+      padding: 30px;
+    }
+
+    .login-card h1 { font-size: 3rem; margin-bottom: 10px; }
+    .login-card p { color: var(--muted); line-height: 1.8; }
+
+    .field-grid,
+    .two-col,
+    .stats-grid,
+    .dashboard-layout {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field-grid { margin-top: 20px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dashboard-layout { grid-template-columns: 280px minmax(0, 1fr); align-items: start; }
+    .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .field { display: grid; gap: 8px; }
+    .field label { font-size: 0.9rem; color: rgba(255,248,241,0.9); }
+    .field input, .field textarea, .field select {
+      min-height: 52px;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,247,239,0.06);
+      color: var(--text);
+      outline: none;
+    }
+    .field textarea { min-height: 120px; resize: vertical; }
+
+    .status {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 16px;
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+    .status.show { display: block; }
+    .status.success { background: rgba(204,239,211,0.12); color: var(--success); border: 1px solid rgba(204,239,211,0.18); }
+    .status.error { background: rgba(255,207,207,0.08); color: var(--danger); border: 1px solid rgba(255,207,207,0.14); }
+    .status.info { background: rgba(255,247,239,0.08); color: var(--muted); border: 1px solid var(--border); }
+
+    .sidebar {
+      border-radius: 24px;
+      padding: 18px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 6px;
+      font-size: 1.3rem;
+      font-family: "Cormorant Garamond", serif;
+    }
+
+    .sidebar p { margin: 0 0 18px; color: var(--muted); line-height: 1.7; }
+
+    .nav-list {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .nav-item {
+      width: 100%;
+      text-align: left;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      background: rgba(255,247,239,0.08);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .panel {
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-title { font-size: 2.2rem; }
+    .section-copy { color: var(--muted); max-width: 680px; line-height: 1.8; }
+
+    .stat-card {
+      border-radius: 20px;
+      padding: 18px;
+    }
+    .stat-card strong { display: block; font-size: 2rem; margin-bottom: 6px; color: var(--gold-soft); }
+    .stat-card span { color: var(--muted); line-height: 1.6; }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,236,218,0.08);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { color: var(--gold-soft); font-size: 0.84rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    td { color: rgba(255,248,241,0.9); line-height: 1.7; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(255,247,239,0.08);
+      border: 1px solid rgba(255,236,218,0.12);
+      color: var(--gold-soft);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .panel-grid { display: grid; gap: 18px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 1080px) {
+      .dashboard-layout,
+      .stats-grid,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Huma Arshad Admin</h1>
+        <p>Manage bookings, inquiries, services, results, testimonials, settings, and leads.</p>
+      </div>
+      <div class="actions">
+        <a class="ghost" href="/">Open Website</a>
+        <button class="button hidden" id="logoutBtn" type="button">Log Out</button>
+      </div>
+    </header>
+
+    <section class="login-wrap" id="loginView">
+      <div class="login-card">
+        <h1>Admin Login</h1>
+        <p>Sign in with the admin account to manage the website content and client request data.</p>
+        <div class="field-grid">
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" type="email" value="admin@humaarshad.com">
+          </div>
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" value="Admin123!">
+          </div>
+          <div class="status info show">Default seeded admin credentials are filled in for you right now.</div>
+          <div class="status error" id="loginError"></div>
+          <button class="button" id="loginBtn" type="button">Sign In</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-layout hidden" id="dashboardView">
+      <aside class="sidebar">
+        <h2 id="adminName">Welcome</h2>
+        <p>Use the dashboard sections below to manage the business content and incoming client requests.</p>
+        <div class="nav-list">
+          <button class="nav-item active" data-section="overview">Overview</button>
+          <button class="nav-item" data-section="bookings">Bookings</button>
+          <button class="nav-item" data-section="inquiries">Inquiries</button>
+          <button class="nav-item" data-section="services">Services</button>
+          <button class="nav-item" data-section="results">Results</button>
+          <button class="nav-item" data-section="testimonials">Testimonials</button>
+          <button class="nav-item" data-section="settings">Settings</button>
+          <button class="nav-item" data-section="newsletter">Newsletter</button>
+          <button class="nav-item" data-section="availability">Availability</button>
+        </div>
+      </aside>
+
+      <main class="panel-grid">
+        <div class="status info show hidden" id="dashboardStatus"></div>
+
+        <section class="panel section-pane" data-pane="overview">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Dashboard Overview</h2>
+              <p class="section-copy">A quick snapshot of the studio’s incoming requests and site content totals.</p>
+            </div>
+            <button class="ghost" id="refreshOverview" type="button">Refresh</button>
+          </div>
+          <div class="stats-grid" id="overviewStats"></div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="bookings">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Booking Requests</h2>
+              <p class="section-copy">Review new consultation requests and update their status.</p>
+            </div>
+            <button class="ghost" id="refreshBookings" type="button">Refresh</button>
+          </div>
+          <div class="table-wrap"><table id="bookingsTable"></table></div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="inquiries">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Contact Inquiries</h2>
+              <p class="section-copy">View general contact form messages and mark them by reply status.</p>
+            </div>
+            <button class="ghost" id="refreshInquiries" type="button">Refresh</button>
+          </div>
+          <div class="table-wrap"><table id="inquiriesTable"></table></div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="services">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Services</h2>
+              <p class="section-copy">Add, edit, or remove treatment services shown across the website.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <form class="panel" id="serviceForm">
+              <div class="field-grid">
+                <div class="field"><label>Title</label><input id="serviceTitle" required></div>
+                <div class="field"><label>Slug</label><input id="serviceSlug"></div>
+                <div class="field"><label>Category</label><input id="serviceCategory"></div>
+                <div class="field"><label>Display Order</label><input id="serviceOrder" type="number" value="0"></div>
+                <div class="field"><label>Short Description</label><textarea id="serviceShort"></textarea></div>
+                <div class="field"><label>Full Description</label><textarea id="serviceFull"></textarea></div>
+                <div class="actions">
+                  <button class="button" type="submit">Save Service</button>
+                  <button class="ghost" type="button" id="resetServiceForm">Reset</button>
+                </div>
+              </div>
+            </form>
+            <div class="table-wrap"><table id="servicesTable"></table></div>
+          </div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="results">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Result Cases</h2>
+              <p class="section-copy">Manage before-and-after case studies and result gallery content.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <form class="panel" id="resultForm">
+              <div class="field-grid">
+                <div class="field"><label>Title</label><input id="resultTitle" required></div>
+                <div class="field"><label>Service</label><input id="resultService" required></div>
+                <div class="field"><label>Client Alias</label><input id="resultAlias"></div>
+                <div class="field"><label>Before Image URL</label><input id="resultBefore"></div>
+                <div class="field"><label>After Image URL</label><input id="resultAfter"></div>
+                <div class="field"><label>Description</label><textarea id="resultDescription"></textarea></div>
+                <div class="actions">
+                  <button class="button" type="submit">Save Result</button>
+                  <button class="ghost" type="button" id="resetResultForm">Reset</button>
+                </div>
+              </div>
+            </form>
+            <div class="table-wrap"><table id="resultsTable"></table></div>
+          </div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="testimonials">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Testimonials</h2>
+              <p class="section-copy">Manage client quotes and featured social proof.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <form class="panel" id="testimonialForm">
+              <div class="field-grid">
+                <div class="field"><label>Client Name</label><input id="testimonialName" required></div>
+                <div class="field"><label>Service</label><input id="testimonialService"></div>
+                <div class="field"><label>Rating</label><input id="testimonialRating" type="number" min="1" max="5" value="5"></div>
+                <div class="field"><label>Quote</label><textarea id="testimonialQuote" required></textarea></div>
+                <div class="actions">
+                  <button class="button" type="submit">Save Testimonial</button>
+                  <button class="ghost" type="button" id="resetTestimonialForm">Reset</button>
+                </div>
+              </div>
+            </form>
+            <div class="table-wrap"><table id="testimonialsTable"></table></div>
+          </div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="settings">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Site Settings</h2>
+              <p class="section-copy">Update public-facing business name, social links, contact info, and CTA text.</p>
+            </div>
+          </div>
+          <form class="panel" id="settingsForm">
+            <div class="field-grid">
+              <div class="two-col">
+                <div class="field"><label>Business Name</label><input id="settingsBusinessName"></div>
+                <div class="field"><label>Consultation CTA Text</label><input id="settingsCta"></div>
+              </div>
+              <div class="two-col">
+                <div class="field"><label>Instagram URL</label><input id="settingsInstagram"></div>
+                <div class="field"><label>WhatsApp URL</label><input id="settingsWhatsapp"></div>
+              </div>
+              <div class="two-col">
+                <div class="field"><label>Email</label><input id="settingsEmail"></div>
+                <div class="field"><label>Phone</label><input id="settingsPhone"></div>
+              </div>
+              <div class="field"><label>Address</label><input id="settingsAddress"></div>
+              <div class="field"><label>Booking Link</label><input id="settingsBookingLink"></div>
+              <div class="actions"><button class="button" type="submit">Save Settings</button></div>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="newsletter">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Newsletter Leads</h2>
+              <p class="section-copy">A list of subscribers captured through the site.</p>
+            </div>
+            <button class="ghost" id="refreshNewsletter" type="button">Refresh</button>
+          </div>
+          <div class="table-wrap"><table id="newsletterTable"></table></div>
+        </section>
+
+        <section class="panel section-pane hidden" data-pane="availability">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Availability</h2>
+              <p class="section-copy">Add or update consultation slot availability for the booking flow.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <form class="panel" id="availabilityForm">
+              <div class="field-grid">
+                <div class="field"><label>Date</label><input id="availabilityDate" type="date" required></div>
+                <div class="field"><label>Time</label><input id="availabilityTime" placeholder="e.g. 3:00 PM" required></div>
+                <div class="actions">
+                  <button class="button" type="submit">Save Slot</button>
+                  <button class="ghost" type="button" id="resetAvailabilityForm">Reset</button>
+                </div>
+              </div>
+            </form>
+            <div class="table-wrap"><table id="availabilityTable"></table></div>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const tokenKey = "huma-admin-token";
+      const loginView = document.getElementById("loginView");
+      const dashboardView = document.getElementById("dashboardView");
+      const loginBtn = document.getElementById("loginBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const loginError = document.getElementById("loginError");
+      const dashboardStatus = document.getElementById("dashboardStatus");
+      const adminName = document.getElementById("adminName");
+      const navItems = document.querySelectorAll(".nav-item");
+      const panes = document.querySelectorAll(".section-pane");
+
+      let authToken = localStorage.getItem(tokenKey) || "";
+      let editing = {
+        serviceId: null,
+        resultId: null,
+        testimonialId: null,
+        availabilityId: null
+      };
+
+      function setStatus(type, message) {
+        dashboardStatus.className = "status " + type + " show";
+        dashboardStatus.textContent = message;
+      }
+
+      function clearLoginError() {
+        loginError.className = "status error";
+        loginError.textContent = "";
+      }
+
+      async function request(url, options = {}) {
+        const headers = {
+          "Content-Type": "application/json",
+          ...(options.headers || {})
+        };
+
+        if (authToken) {
+          headers.Authorization = "Bearer " + authToken;
+        }
+
+        const response = await fetch(url, {
+          ...options,
+          headers
+        });
+
+        const payload = await response.json().catch(function () {
+          return {};
+        });
+
+        if (!response.ok) {
+          throw new Error(payload.message || "Request failed");
+        }
+
+        return payload;
+      }
+
+      function showDashboard() {
+        loginView.classList.add("hidden");
+        dashboardView.classList.remove("hidden");
+        logoutBtn.classList.remove("hidden");
+      }
+
+      function showLogin() {
+        dashboardView.classList.add("hidden");
+        logoutBtn.classList.add("hidden");
+        loginView.classList.remove("hidden");
+      }
+
+      function activatePane(name) {
+        navItems.forEach((item) => {
+          item.classList.toggle("active", item.dataset.section === name);
+        });
+
+        panes.forEach((pane) => {
+          pane.classList.toggle("hidden", pane.dataset.pane !== name);
+        });
+      }
+
+      function tableMarkup(headers, rows) {
+        const head = "<thead><tr>" + headers.map((header) => "<th>" + header + "</th>").join("") + "</tr></thead>";
+        const body = "<tbody>" + (rows.length ? rows.join("") : "<tr><td colspan='" + headers.length + "'>No records found.</td></tr>") + "</tbody>";
+        return head + body;
+      }
+
+      async function login() {
+        clearLoginError();
+        try {
+          const payload = await request("/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify({
+              email: document.getElementById("loginEmail").value.trim(),
+              password: document.getElementById("loginPassword").value
+            })
+          });
+
+          authToken = payload.token;
+          localStorage.setItem(tokenKey, authToken);
+          adminName.textContent = payload.admin.fullName;
+          showDashboard();
+          setStatus("success", "Logged in successfully.");
+          await loadAll();
+        } catch (error) {
+          loginError.className = "status error show";
+          loginError.textContent = error.message;
+        }
+      }
+
+      async function loadMe() {
+        const payload = await request("/api/auth/me");
+        adminName.textContent = payload.admin.fullName;
+      }
+
+      async function loadOverview() {
+        const payload = await request("/api/admin/dashboard");
+        const counts = payload.data.counts;
+        document.getElementById("overviewStats").innerHTML = [
+          { label: "Bookings", value: counts.bookings },
+          { label: "Unread Inquiries", value: counts.unreadInquiries },
+          { label: "Services", value: counts.services },
+          { label: "Newsletter Leads", value: counts.newsletterLeads }
+        ].map((item) => "<div class='stat-card'><strong>" + item.value + "</strong><span>" + item.label + "</span></div>").join("");
+      }
+
+      async function loadBookings() {
+        const payload = await request("/api/bookings");
+        const rows = payload.data.map((booking) => {
+          return "<tr>" +
+            "<td>" + booking.fullName + "<br><span class='badge'>" + booking.status + "</span></td>" +
+            "<td>" + booking.email + "<br>" + booking.phone + "</td>" +
+            "<td>" + booking.service + "</td>" +
+            "<td>" + (booking.preferredDate || "-") + "<br>" + (booking.preferredTime || "-") + "</td>" +
+            "<td>" + (booking.message || "-") + "</td>" +
+            "<td><div class='actions'>" +
+            "<button class='ghost' onclick=\"window.adminSetBookingStatus('" + booking._id + "','confirmed')\">Confirm</button>" +
+            "<button class='ghost' onclick=\"window.adminSetBookingStatus('" + booking._id + "','completed')\">Complete</button>" +
+            "<button class='ghost' onclick=\"window.adminDeleteRecord('/api/bookings/" + booking._id + "')\">Delete</button>" +
+            "</div></td>" +
+          "</tr>";
+        });
+        document.getElementById("bookingsTable").innerHTML = tableMarkup(["Client", "Contact", "Service", "Preferred", "Message", "Actions"], rows);
+      }
+
+      async function loadInquiries() {
+        const payload = await request("/api/inquiries");
+        const rows = payload.data.map((inquiry) => {
+          return "<tr>" +
+            "<td>" + inquiry.fullName + "<br><span class='badge'>" + inquiry.status + "</span></td>" +
+            "<td>" + inquiry.email + "<br>" + (inquiry.phone || "-") + "</td>" +
+            "<td>" + (inquiry.subject || "-") + "</td>" +
+            "<td>" + inquiry.message + "</td>" +
+            "<td><div class='actions'>" +
+            "<button class='ghost' onclick=\"window.adminSetInquiryStatus('" + inquiry._id + "','read')\">Mark Read</button>" +
+            "<button class='ghost' onclick=\"window.adminSetInquiryStatus('" + inquiry._id + "','replied')\">Mark Replied</button>" +
+            "<button class='ghost' onclick=\"window.adminDeleteRecord('/api/inquiries/" + inquiry._id + "')\">Delete</button>" +
+            "</div></td>" +
+          "</tr>";
+        });
+        document.getElementById("inquiriesTable").innerHTML = tableMarkup(["Client", "Contact", "Subject", "Message", "Actions"], rows);
+      }
+
+      async function loadServices() {
+        const payload = await request("/api/services/admin/all");
+        const rows = payload.data.map((service) => {
+          const safe = encodeURIComponent(JSON.stringify(service));
+          return "<tr>" +
+            "<td>" + service.title + "<br><span class='badge'>" + service.slug + "</span></td>" +
+            "<td>" + (service.category || "-") + "</td>" +
+            "<td>" + (service.shortDescription || "-") + "</td>" +
+            "<td><div class='actions'>" +
+            "<button class='ghost' onclick=\"window.editService('" + safe + "')\">Edit</button>" +
+            "<button class='ghost' onclick=\"window.adminDeleteRecord('/api/services/" + service._id + "')\">Delete</button>" +
+            "</div></td>" +
+          "</tr>";
+        });
+        document.getElementById("servicesTable").innerHTML = tableMarkup(["Service", "Category", "Description", "Actions"], rows);
+      }
+
+      async function loadResults() {
+        const payload = await request("/api/results/admin/all");
+        const rows = payload.data.map((result) => {
+          const safe = encodeURIComponent(JSON.stringify(result));
+          return "<tr>" +
+            "<td>" + result.title + "</td>" +
+            "<td>" + result.service + "</td>" +
+            "<td>" + (result.clientAlias || "-") + "</td>" +
+            "<td><div class='actions'>" +
+            "<button class='ghost' onclick=\"window.editResult('" + safe + "')\">Edit</button>" +
+            "<button class='ghost' onclick=\"window.adminDeleteRecord('/api/results/" + result._id + "')\">Delete</button>" +
+            "</div></td>" +
+          "</tr>";
+        });
+        document.getElementById("resultsTable").innerHTML = tableMarkup(["Title", "Service", "Client", "Actions"], rows);
+      }
+
+      async function loadTestimonials() {
+        const payload = await request("/api/testimonials/admin/all");
+        const rows = payload.data.map((testimonial) => {
+          const safe = encodeURIComponent(JSON.stringify(testimonial));
+          return "<tr>" +
+            "<td>" + testimonial.clientName + "</td>" +
+            "<td>" + (testimonial.service || "-") + "</td>" +
+            "<td>" + testimonial.rating + "/5</td>" +
+            "<td>" + testimonial.quote + "</td>" +
+            "<td><div class='actions'>" +
+            "<button class='ghost' onclick=\"window.editTestimonial('" + safe + "')\">Edit</button>" +
+            "<button class='ghost' onclick=\"window.adminDeleteRecord('/api/testimonials/" + testimonial._id + "')\">Delete</button>" +
+            "</div></td>" +
+          "</tr>";
+        });
+        document.getElementById("testimonialsTable").innerHTML = tableMarkup(["Client", "Service", "Rating", "Quote", "Actions"], rows);
+      }
+
+      async function loadSettings() {
+        const payload = await request("/api/settings");
+        const settings = payload.data || {};
+        document.getElementById("settingsBusinessName").value = settings.businessName || "";
+        document.getElementById("settingsCta").value = settings.consultationCtaText || "";
+        document.getElementById("settingsInstagram").value = settings.instagramUrl || "";
+        document.getElementById("settingsWhatsapp").value = settings.whatsappUrl || "";
+        document.getElementById("settingsEmail").value = settings.email || "";
+        document.getElementById("settingsPhone").value = settings.phone || "";
+        document.getElementById("settingsAddress").value = settings.address || "";
+        document.getElementById("settingsBookingLink").value = settings.bookingLink || "";
+      }
+
+      async function loadNewsletter() {
+        const payload = await request("/api/newsletter");
+        const rows = payload.data.map((lead) => {
+          return "<tr>" +
+            "<td>" + lead.email + "</td>" +
+            "<td>" + (lead.source || "website") + "</td>" +
+            "<td>" + new Date(lead.createdAt).toLocaleString() + "</td>" +
+            "<td><button class='ghost' onclick=\"window.adminDeleteRecord('/api/newsletter/" + lead._id + "')\">Delete</button></td>" +
+          "</tr>";
+        });
+        document.getElementById("newsletterTable").innerHTML = tableMarkup(["Email", "Source", "Created", "Actions"], rows);
+      }
+
+      async function loadAvailability() {
+        const payload = await request("/api/availability/admin/all");
+        const rows = payload.data.map((slot) => {
+          const safe = encodeURIComponent(JSON.stringify(slot));
+          return "<tr>" +
+            "<td>" + slot.date + "</td>" +
+            "<td>" + slot.time + "</td>" +
+            "<td>" + (slot.available ? "Available" : "Unavailable") + "</td>" +
+            "<td><div class='actions'>" +
+            "<button class='ghost' onclick=\"window.editAvailability('" + safe + "')\">Edit</button>" +
+            "<button class='ghost' onclick=\"window.adminDeleteRecord('/api/availability/" + slot._id + "')\">Delete</button>" +
+            "</div></td>" +
+          "</tr>";
+        });
+        document.getElementById("availabilityTable").innerHTML = tableMarkup(["Date", "Time", "Status", "Actions"], rows);
+      }
+
+      async function loadAll() {
+        await Promise.all([
+          loadMe(),
+          loadOverview(),
+          loadBookings(),
+          loadInquiries(),
+          loadServices(),
+          loadResults(),
+          loadTestimonials(),
+          loadSettings(),
+          loadNewsletter(),
+          loadAvailability()
+        ]);
+      }
+
+      async function saveService(event) {
+        event.preventDefault();
+        const payload = {
+          title: document.getElementById("serviceTitle").value.trim(),
+          slug: document.getElementById("serviceSlug").value.trim(),
+          category: document.getElementById("serviceCategory").value.trim(),
+          displayOrder: Number(document.getElementById("serviceOrder").value || 0),
+          shortDescription: document.getElementById("serviceShort").value.trim(),
+          fullDescription: document.getElementById("serviceFull").value.trim()
+        };
+
+        const url = editing.serviceId ? "/api/services/" + editing.serviceId : "/api/services";
+        const method = editing.serviceId ? "PATCH" : "POST";
+        await request(url, { method, body: JSON.stringify(payload) });
+        editing.serviceId = null;
+        event.target.reset();
+        document.getElementById("serviceOrder").value = "0";
+        await loadServices();
+        setStatus("success", "Service saved successfully.");
+      }
+
+      async function saveResult(event) {
+        event.preventDefault();
+        const payload = {
+          title: document.getElementById("resultTitle").value.trim(),
+          service: document.getElementById("resultService").value.trim(),
+          clientAlias: document.getElementById("resultAlias").value.trim(),
+          beforeImageUrl: document.getElementById("resultBefore").value.trim(),
+          afterImageUrl: document.getElementById("resultAfter").value.trim(),
+          description: document.getElementById("resultDescription").value.trim()
+        };
+        const url = editing.resultId ? "/api/results/" + editing.resultId : "/api/results";
+        const method = editing.resultId ? "PATCH" : "POST";
+        await request(url, { method, body: JSON.stringify(payload) });
+        editing.resultId = null;
+        event.target.reset();
+        await loadResults();
+        setStatus("success", "Result case saved successfully.");
+      }
+
+      async function saveTestimonial(event) {
+        event.preventDefault();
+        const payload = {
+          clientName: document.getElementById("testimonialName").value.trim(),
+          service: document.getElementById("testimonialService").value.trim(),
+          rating: Number(document.getElementById("testimonialRating").value || 5),
+          quote: document.getElementById("testimonialQuote").value.trim()
+        };
+        const url = editing.testimonialId ? "/api/testimonials/" + editing.testimonialId : "/api/testimonials";
+        const method = editing.testimonialId ? "PATCH" : "POST";
+        await request(url, { method, body: JSON.stringify(payload) });
+        editing.testimonialId = null;
+        event.target.reset();
+        document.getElementById("testimonialRating").value = "5";
+        await loadTestimonials();
+        setStatus("success", "Testimonial saved successfully.");
+      }
+
+      async function saveSettings(event) {
+        event.preventDefault();
+        const payload = {
+          businessName: document.getElementById("settingsBusinessName").value.trim(),
+          consultationCtaText: document.getElementById("settingsCta").value.trim(),
+          instagramUrl: document.getElementById("settingsInstagram").value.trim(),
+          whatsappUrl: document.getElementById("settingsWhatsapp").value.trim(),
+          email: document.getElementById("settingsEmail").value.trim(),
+          phone: document.getElementById("settingsPhone").value.trim(),
+          address: document.getElementById("settingsAddress").value.trim(),
+          bookingLink: document.getElementById("settingsBookingLink").value.trim()
+        };
+        await request("/api/settings", { method: "PUT", body: JSON.stringify(payload) });
+        setStatus("success", "Site settings updated successfully.");
+      }
+
+      async function saveAvailability(event) {
+        event.preventDefault();
+        const payload = {
+          date: document.getElementById("availabilityDate").value,
+          time: document.getElementById("availabilityTime").value.trim(),
+          available: true
+        };
+        const url = editing.availabilityId ? "/api/availability/" + editing.availabilityId : "/api/availability";
+        const method = editing.availabilityId ? "PATCH" : "POST";
+        await request(url, { method, body: JSON.stringify(payload) });
+        editing.availabilityId = null;
+        event.target.reset();
+        await loadAvailability();
+        setStatus("success", "Availability slot saved successfully.");
+      }
+
+      window.adminDeleteRecord = async function adminDeleteRecord(url) {
+        if (!confirm("Delete this record?")) return;
+        await request(url, { method: "DELETE" });
+        await loadAll();
+        setStatus("success", "Record deleted successfully.");
+      };
+
+      window.adminSetBookingStatus = async function adminSetBookingStatus(id, status) {
+        await request("/api/bookings/" + id + "/status", {
+          method: "PATCH",
+          body: JSON.stringify({ status })
+        });
+        await loadBookings();
+        await loadOverview();
+        setStatus("success", "Booking status updated.");
+      };
+
+      window.adminSetInquiryStatus = async function adminSetInquiryStatus(id, status) {
+        await request("/api/inquiries/" + id + "/status", {
+          method: "PATCH",
+          body: JSON.stringify({ status })
+        });
+        await loadInquiries();
+        await loadOverview();
+        setStatus("success", "Inquiry status updated.");
+      };
+
+      window.editService = function editService(encoded) {
+        const service = JSON.parse(decodeURIComponent(encoded));
+        editing.serviceId = service._id;
+        document.getElementById("serviceTitle").value = service.title || "";
+        document.getElementById("serviceSlug").value = service.slug || "";
+        document.getElementById("serviceCategory").value = service.category || "";
+        document.getElementById("serviceOrder").value = service.displayOrder || 0;
+        document.getElementById("serviceShort").value = service.shortDescription || "";
+        document.getElementById("serviceFull").value = service.fullDescription || "";
+        activatePane("services");
+      };
+
+      window.editResult = function editResult(encoded) {
+        const result = JSON.parse(decodeURIComponent(encoded));
+        editing.resultId = result._id;
+        document.getElementById("resultTitle").value = result.title || "";
+        document.getElementById("resultService").value = result.service || "";
+        document.getElementById("resultAlias").value = result.clientAlias || "";
+        document.getElementById("resultBefore").value = result.beforeImageUrl || "";
+        document.getElementById("resultAfter").value = result.afterImageUrl || "";
+        document.getElementById("resultDescription").value = result.description || "";
+        activatePane("results");
+      };
+
+      window.editTestimonial = function editTestimonial(encoded) {
+        const testimonial = JSON.parse(decodeURIComponent(encoded));
+        editing.testimonialId = testimonial._id;
+        document.getElementById("testimonialName").value = testimonial.clientName || "";
+        document.getElementById("testimonialService").value = testimonial.service || "";
+        document.getElementById("testimonialRating").value = testimonial.rating || 5;
+        document.getElementById("testimonialQuote").value = testimonial.quote || "";
+        activatePane("testimonials");
+      };
+
+      window.editAvailability = function editAvailability(encoded) {
+        const slot = JSON.parse(decodeURIComponent(encoded));
+        editing.availabilityId = slot._id;
+        document.getElementById("availabilityDate").value = slot.date || "";
+        document.getElementById("availabilityTime").value = slot.time || "";
+        activatePane("availability");
+      };
+
+      document.getElementById("serviceForm").addEventListener("submit", saveService);
+      document.getElementById("resultForm").addEventListener("submit", saveResult);
+      document.getElementById("testimonialForm").addEventListener("submit", saveTestimonial);
+      document.getElementById("settingsForm").addEventListener("submit", saveSettings);
+      document.getElementById("availabilityForm").addEventListener("submit", saveAvailability);
+
+      document.getElementById("resetServiceForm").addEventListener("click", function () {
+        editing.serviceId = null;
+        document.getElementById("serviceForm").reset();
+        document.getElementById("serviceOrder").value = "0";
+      });
+      document.getElementById("resetResultForm").addEventListener("click", function () {
+        editing.resultId = null;
+        document.getElementById("resultForm").reset();
+      });
+      document.getElementById("resetTestimonialForm").addEventListener("click", function () {
+        editing.testimonialId = null;
+        document.getElementById("testimonialForm").reset();
+        document.getElementById("testimonialRating").value = "5";
+      });
+      document.getElementById("resetAvailabilityForm").addEventListener("click", function () {
+        editing.availabilityId = null;
+        document.getElementById("availabilityForm").reset();
+      });
+
+      document.getElementById("refreshOverview").addEventListener("click", loadOverview);
+      document.getElementById("refreshBookings").addEventListener("click", loadBookings);
+      document.getElementById("refreshInquiries").addEventListener("click", loadInquiries);
+      document.getElementById("refreshNewsletter").addEventListener("click", loadNewsletter);
+
+      navItems.forEach((button) => {
+        button.addEventListener("click", function () {
+          activatePane(button.dataset.section);
+        });
+      });
+
+      loginBtn.addEventListener("click", login);
+
+      logoutBtn.addEventListener("click", function () {
+        authToken = "";
+        localStorage.removeItem(tokenKey);
+        showLogin();
+        clearLoginError();
+      });
+
+      if (authToken) {
+        showDashboard();
+        loadAll().catch(function (error) {
+          authToken = "";
+          localStorage.removeItem(tokenKey);
+          showLogin();
+          loginError.className = "status error show";
+          loginError.textContent = error.message;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
