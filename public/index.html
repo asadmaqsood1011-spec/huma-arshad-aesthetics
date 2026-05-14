@@ -3,979 +3,2077 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Huma Arshad Aesthetics — Paramedical Micropigmentation, Islamabad</title>
-  <meta name="description" content="Pakistan's first certified paramedical micropigmentation specialist. Scar revision, vitiligo camouflage, lip blush, brows, and skin treatments in Islamabad.">
+  <title>Huma Arshad Aesthetics | Premium Paramedical Micropigmentation Islamabad</title>
+  <meta name="description" content="A premium Islamabad aesthetics studio for scar revision, vitiligo camouflage, lip blush, brows, skin therapy, and corrective micropigmentation by Huma Arshad.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; }
 
     :root {
-      --bg: #0e0908;
-      --surface: #1a100d;
-      --surface2: #221411;
-      --border: rgba(255,238,218,0.12);
-      --gold: #c9965a;
-      --gold-light: #e8c08a;
-      --text: #f5ede4;
-      --muted: rgba(245,237,228,0.62);
-      --radius: 20px;
-      --radius-sm: 12px;
+      --ink: #14110f;
+      --ink-2: #211714;
+      --cream: #fff8ef;
+      --pearl: #f7eee4;
+      --muted: #766a62;
+      --line: rgba(38, 26, 21, 0.14);
+      --glass: rgba(255, 248, 239, 0.72);
+      --champagne: #d9ad73;
+      --champagne-2: #f0d8b7;
+      --rose: #7c3b3f;
+      --sage: #6f806d;
+      --night: #0f0b0a;
+      --shadow: 0 30px 90px rgba(35, 22, 17, 0.18);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --ease: cubic-bezier(.2,.8,.2,1);
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      margin: 0;
+      min-height: 100%;
+      font-family: "Inter", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
       overflow-x: hidden;
       line-height: 1.6;
     }
 
-    img { max-width: 100%; display: block; }
+    body::selection { background: var(--ink); color: var(--cream); }
+    img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
-    button { font: inherit; cursor: pointer; border: none; background: none; }
+    button, input, select, textarea { font: inherit; }
+    button { border: 0; cursor: pointer; }
 
-    /* ── SCROLL PROGRESS ── */
-    #progress-bar {
-      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
-      z-index: 999; pointer-events: none;
-      transition: width 50ms linear;
+    .cursor-aura {
+      position: fixed;
+      inset: auto auto 0 0;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 60;
+      background: radial-gradient(circle, rgba(217,173,115,0.18), rgba(124,59,63,0.08) 38%, transparent 66%);
+      transform: translate3d(-50%, -50%, 0);
+      mix-blend-mode: multiply;
+      opacity: 0;
+      transition: opacity .35s ease;
     }
 
-    /* ── NAVBAR ── */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      z-index: 1000;
+      background: linear-gradient(90deg, var(--rose), var(--champagne), var(--sage));
+      box-shadow: 0 0 20px rgba(217,173,115,.4);
+    }
+
     .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 16px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(14,9,8,0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      z-index: 100;
+      width: min(1180px, calc(100% - 28px));
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 68px;
+      padding: 10px 12px 10px 22px;
+      border: 1px solid rgba(255,255,255,.46);
+      border-radius: 999px;
+      background: rgba(255, 248, 239, 0.72);
+      box-shadow: 0 20px 55px rgba(18, 12, 9, 0.12);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
     }
 
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--gold-light);
+    .brand {
+      display: grid;
+      gap: 2px;
+      min-width: max-content;
     }
 
-    .nav-logo span { display: block; font-size: 0.65rem; font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 1px; }
+    .brand strong {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.35rem;
+      line-height: 1;
+      letter-spacing: .01em;
+    }
+
+    .brand span {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
 
     .nav-links {
-      display: flex; align-items: center; gap: 28px;
-    }
-
-    .nav-links a { font-size: 0.88rem; color: var(--muted); transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      padding: 10px 20px;
-      background: var(--gold);
-      color: #1a0d06;
-      border-radius: 99px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      transition: opacity 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.88; }
-
-    .nav-hamburger {
-      display: none;
-      flex-direction: column; gap: 5px;
-      width: 28px; cursor: pointer;
-    }
-    .nav-hamburger span {
-      height: 2px; background: var(--text); border-radius: 2px;
-      transition: all 0.3s;
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
-      background: rgba(14,9,8,0.97);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 20px;
-      flex-direction: column; gap: 16px;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 1rem; color: var(--muted); padding: 10px 0; border-bottom: 1px solid var(--border); }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu .nav-cta { text-align: center; margin-top: 8px; }
-
-    /* ── SECTIONS ── */
-    section { padding: 80px 20px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-label {
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
-    }
-
-    h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 600; line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-
-    h2 em { font-style: italic; color: var(--gold-light); }
-
-    .section-sub {
-      color: var(--muted); font-size: 1rem;
-      line-height: 1.75; max-width: 560px;
-      margin-bottom: 48px;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      padding-top: 100px;
-      display: flex; flex-direction: column;
+      display: flex;
+      align-items: center;
       justify-content: center;
+      gap: clamp(14px, 2vw, 28px);
+      color: rgba(20,17,15,.68);
+      font-size: .86rem;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      position: relative;
+      transition: color .25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -7px;
+      height: 1px;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: var(--rose);
+      transition: transform .25s var(--ease);
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      place-items: center;
+    }
+
+    .nav-toggle span,
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      content: "";
+      position: absolute;
+    }
+    .nav-toggle span { position: relative; }
+    .nav-toggle span::before { transform: translateY(-6px); }
+    .nav-toggle span::after { transform: translateY(6px); }
+    .nav.open .nav-toggle span { background: transparent; }
+    .nav.open .nav-toggle span::before { transform: rotate(45deg); background: var(--cream); }
+    .nav.open .nav-toggle span::after { transform: rotate(-45deg); background: var(--cream); }
+
+    .btn {
+      position: relative;
+      isolation: isolate;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: transform .25s var(--ease), box-shadow .25s ease, border-color .25s ease;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      transform: translateX(-110%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.48), transparent);
+      transition: transform .6s ease;
+    }
+
+    .btn:hover::before { transform: translateX(110%); }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-dark {
+      color: var(--cream);
+      background: linear-gradient(135deg, var(--ink), #3a2420);
+      box-shadow: 0 16px 42px rgba(20,17,15,.24);
+    }
+    .btn-light {
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,.6);
+      background: rgba(255,248,239,.78);
+      box-shadow: 0 14px 34px rgba(20,17,15,.12);
+    }
+    .btn-ghost {
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .btn-hero-outline {
+      color: var(--cream);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 94vh;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      color: var(--cream);
+      background: var(--night);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
       background:
-        radial-gradient(ellipse at 60% 0%, rgba(201,150,90,0.15) 0%, transparent 55%),
-        radial-gradient(ellipse at 0% 100%, rgba(201,150,90,0.08) 0%, transparent 50%),
-        var(--bg);
+        linear-gradient(90deg, rgba(13,9,8,.86) 0%, rgba(13,9,8,.42) 44%, rgba(13,9,8,.22) 100%),
+        linear-gradient(0deg, rgba(15,11,10,.9) 0%, transparent 34%);
+      z-index: 1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 112%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(.92) contrast(1.05);
+      transform: translateY(var(--hero-shift, 0px)) scale(1.04);
+    }
+
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: .22;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(90deg, #000, transparent 82%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(110deg, transparent 0%, transparent 42%, rgba(255,248,239,.12) 48%, transparent 56%, transparent 100%);
+      transform: translateX(-120%);
+      animation: heroSheen 7s ease-in-out infinite;
+    }
+
+    @keyframes heroSheen {
+      0%, 38% { transform: translateX(-120%); }
+      62%, 100% { transform: translateX(120%); }
     }
 
     .hero-inner {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 20px;
+      position: relative;
+      z-index: 3;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 132px 0 72px;
       display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 60px;
+      grid-template-columns: minmax(0, 760px) minmax(280px, 380px);
+      gap: 56px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: rgba(255,248,239,.78);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .24em;
+      text-transform: uppercase;
     }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 14px;
-      background: rgba(201,150,90,0.12);
-      border: 1px solid rgba(201,150,90,0.25);
-      border-radius: 99px;
-      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--gold-light);
-      margin-bottom: 24px;
-    }
-    .hero-badge::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold);
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--champagne);
     }
 
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.2rem, 7vw, 5.5rem);
-      font-weight: 600; line-height: 0.95;
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
-      color: var(--text);
+    h1, h2, h3 { margin: 0; font-family: "Cormorant Garamond", serif; }
+    h1 {
+      max-width: 780px;
+      font-size: clamp(4.4rem, 10vw, 9.6rem);
+      line-height: .82;
+      letter-spacing: -.055em;
+      font-weight: 600;
     }
-    .hero h1 em { font-style: italic; color: var(--gold-light); display: block; }
+    h1 span {
+      display: block;
+      font-style: italic;
+      color: var(--champagne-2);
+      transform: translateX(clamp(18px, 5vw, 70px));
+    }
 
-    .hero-desc {
-      color: var(--muted); font-size: 1.05rem; line-height: 1.8;
-      max-width: 480px; margin-bottom: 36px;
+    .hero-copy {
+      max-width: 620px;
+      margin: 24px 0 34px;
+      color: rgba(255,248,239,.78);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.85;
     }
 
     .hero-actions {
-      display: flex; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-
-    .btn {
-      padding: 14px 28px; border-radius: 99px;
-      font-size: 0.95rem; font-weight: 600;
-      transition: all 0.2s;
-    }
-    .btn-gold {
-      background: var(--gold); color: #1a0d06;
-      box-shadow: 0 8px 28px rgba(201,150,90,0.3);
-    }
-    .btn-gold:hover { opacity: 0.88; transform: translateY(-2px); }
-    .btn-outline {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
-
-    .hero-stats {
-      display: flex; gap: 32px; flex-wrap: wrap;
-    }
-    .stat strong {
-      display: block; font-size: 1.5rem; font-weight: 700; color: var(--gold-light);
-    }
-    .stat span { font-size: 0.82rem; color: var(--muted); }
-
-    .hero-image-wrap {
-      position: relative;
-    }
-    .hero-img {
-      width: 100%; aspect-ratio: 3/4;
-      object-fit: cover; object-position: top;
-      border-radius: 28px;
-      border: 1px solid var(--border);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-    }
-    .hero-img-badge {
-      position: absolute; bottom: 24px; left: -20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
-      font-size: 0.82rem;
-      backdrop-filter: blur(12px);
-    }
-    .hero-img-badge strong { display: block; color: var(--gold-light); margin-bottom: 2px; }
-    .hero-img-badge span { color: var(--muted); font-size: 0.76rem; }
-
-    /* ── MARQUEE ── */
-    .marquee-wrap {
-      overflow: hidden; padding: 16px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .marquee-track {
-      display: flex; gap: 40px; width: max-content;
-      animation: marquee 20s linear infinite;
-    }
-    .marquee-track span {
-      font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(201,150,90,0.5); white-space: nowrap;
-    }
-    .marquee-dot { color: rgba(201,150,90,0.2) !important; }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* ── ABOUT ── */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-    }
-    .about-img {
-      width: 100%; aspect-ratio: 4/5;
-      object-fit: cover; border-radius: var(--radius);
-      border: 1px solid var(--border);
-    }
-    .about-cards {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 14px; margin-top: 32px;
-    }
-    .about-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 18px;
-    }
-    .about-card strong { display: block; font-size: 0.88rem; color: var(--gold-light); margin-bottom: 4px; }
-    .about-card span { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
-
-    /* ── SERVICES ── */
-    .services-section { background: var(--surface); }
-
-    .filter-row {
-      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px;
-    }
-    .filter-btn {
-      padding: 8px 18px; border-radius: 99px;
-      border: 1px solid var(--border);
-      font-size: 0.84rem; color: var(--muted);
-      background: transparent;
-      transition: all 0.2s;
-    }
-    .filter-btn.active, .filter-btn:hover {
-      background: var(--gold); color: #1a0d06;
-      border-color: var(--gold);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .service-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      display: flex; flex-direction: column; gap: 12px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .service-card:hover { border-color: rgba(201,150,90,0.3); transform: translateY(-4px); }
-    .service-tag {
-      display: inline-flex; align-items: center;
-      padding: 4px 10px; border-radius: 99px;
-      background: rgba(201,150,90,0.1);
-      border: 1px solid rgba(201,150,90,0.2);
-      font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--gold); width: fit-content;
-    }
-    .service-card h3 { font-size: 1.1rem; font-weight: 600; }
-    .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; flex: 1; }
-    .service-card .btn { margin-top: auto; text-align: center; padding: 10px 20px; font-size: 0.86rem; }
-
-    /* ── RESULTS ── */
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .result-card {
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface);
-    }
-    .result-img {
-      width: 100%; aspect-ratio: 4/5;
-      object-fit: cover; object-position: top;
-      display: block;
-    }
-    .result-label {
-      padding: 16px 18px;
-    }
-    .result-label strong { display: block; font-size: 0.92rem; margin-bottom: 4px; }
-    .result-label span { font-size: 0.8rem; color: var(--muted); }
-
-    .result-placeholder {
-      width: 100%; aspect-ratio: 4/5;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex;
       gap: 12px;
-      background: var(--surface2);
-      color: var(--muted);
+      flex-wrap: wrap;
     }
-    .result-placeholder .rp-icon { font-size: 2.5rem; }
-    .result-placeholder p { font-size: 0.82rem; text-align: center; padding: 0 16px; line-height: 1.6; }
 
-    /* ── TESTIMONIALS ── */
-    .testimonials-section { background: var(--surface); }
-    .reviews-grid {
+    .hero-proof {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 14px;
+      align-self: end;
     }
-    .review-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      display: flex; flex-direction: column; gap: 16px;
+
+    .proof-card {
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 20px;
+      background: rgba(255,248,239,.1);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 24px 70px rgba(0,0,0,.18);
     }
-    .review-service {
-      font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--gold);
+
+    .proof-card strong {
+      display: block;
+      color: var(--champagne-2);
+      font-size: 1.08rem;
+      margin-bottom: 4px;
     }
-    .review-text {
-      color: var(--muted); font-size: 0.92rem;
-      line-height: 1.8; flex: 1;
+
+    .proof-card span { color: rgba(255,248,239,.68); font-size: .88rem; }
+
+    .hero-strip {
+      position: relative;
+      z-index: 4;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 24px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255,248,239,.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .strip-item {
+      min-height: 104px;
+      padding: 20px;
+      border-right: 1px solid rgba(255,255,255,.16);
+    }
+    .strip-item:last-child { border-right: 0; }
+    .strip-item strong {
+      display: block;
+      font-size: clamp(1.35rem, 2.2vw, 2rem);
+      line-height: 1;
+      color: var(--champagne-2);
+    }
+    .strip-item span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255,248,239,.64);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    .section {
+      position: relative;
+      padding: clamp(78px, 10vw, 132px) 20px;
+    }
+
+    .container {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(280px, .72fr);
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 44px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--rose);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h2 {
+      max-width: 780px;
+      font-size: clamp(2.7rem, 6vw, 5.5rem);
+      line-height: .9;
+      letter-spacing: -.045em;
+      font-weight: 600;
+    }
+
+    h2 em {
+      color: var(--rose);
       font-style: italic;
     }
-    .review-text::before { content: '"'; font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold); line-height: 0; vertical-align: -0.5em; margin-right: 4px; }
-    .review-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px; border-top: 1px solid var(--border);
-      font-size: 0.82rem;
-    }
-    .review-footer strong { display: block; margin-bottom: 2px; }
-    .review-footer span { color: var(--muted); }
-    .stars { color: var(--gold); letter-spacing: 2px; }
 
-    /* ── BOOK ── */
-    .book-wrap {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 48px; align-items: start;
+    .section-copy {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.9;
     }
-    .book-info h2 { margin-bottom: 16px; }
-    .contact-items { display: grid; gap: 12px; margin-top: 28px; }
-    .contact-item {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 16px;
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 430px);
+      gap: 24px;
+      align-items: stretch;
     }
-    .contact-item strong { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 4px; }
-    .contact-item span, .contact-item a { font-size: 0.9rem; color: var(--muted); }
+
+    .feature-panel {
+      position: relative;
+      min-height: 560px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--cream);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: saturate(.92) contrast(1.04);
+      transition: transform 1.2s var(--ease);
+    }
+
+    .feature-panel:hover img { transform: scale(1.04); }
+
+    .feature-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(15,11,10,.82), transparent 52%);
+    }
+
+    .feature-caption {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 26px;
+      z-index: 2;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .feature-caption h3 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: .9;
+      letter-spacing: -.035em;
+      font-weight: 600;
+    }
+
+    .feature-caption p {
+      max-width: 270px;
+      margin: 0;
+      color: rgba(255,248,239,.72);
+      font-size: .9rem;
+    }
+
+    .atelier {
+      display: grid;
+      gap: 14px;
+    }
+
+    .atelier-card {
+      position: relative;
+      min-height: 174px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,255,255,.56);
+      overflow: hidden;
+      transition: transform .35s var(--ease), box-shadow .35s ease, border-color .35s ease;
+    }
+
+    .atelier-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% -54% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(217,173,115,.22), transparent 70%);
+      transition: transform .45s var(--ease);
+    }
+
+    .atelier-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(124,59,63,.26);
+      box-shadow: 0 24px 60px rgba(28,18,15,.1);
+    }
+
+    .atelier-card:hover::before { transform: translate(-24px, -18px) scale(1.15); }
+    .atelier-card .num {
+      color: var(--champagne);
+      font-weight: 800;
+      font-size: .78rem;
+      letter-spacing: .18em;
+    }
+    .atelier-card h3 {
+      margin-top: 18px;
+      font-family: "Inter", sans-serif;
+      font-size: 1.03rem;
+      letter-spacing: 0;
+    }
+    .atelier-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.75;
+    }
+
+    .marquee {
+      position: relative;
+      overflow: hidden;
+      padding: 22px 0;
+      border-block: 1px solid var(--line);
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 18px;
+      animation: marquee 30s linear infinite;
+    }
+
+    .marquee span {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      white-space: nowrap;
+      color: rgba(255,248,239,.74);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+      font-style: italic;
+    }
+
+    .marquee span::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--champagne);
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .treatments {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(124,59,63,.09), transparent 26%),
+        radial-gradient(circle at 88% 76%, rgba(111,128,109,.12), transparent 25%),
+        var(--pearl);
+    }
+
+    .treatment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .treatment-card {
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 24px;
+      border: 1px solid rgba(38,26,21,.12);
+      border-radius: 26px;
+      background: rgba(255,248,239,.72);
+      box-shadow: 0 18px 50px rgba(31,20,16,.07);
+      transform-style: preserve-3d;
+      transition: transform .35s var(--ease), box-shadow .35s ease, background .35s ease;
+    }
+
+    .treatment-card:hover {
+      transform: translateY(-8px) rotateX(1deg);
+      background: rgba(255,248,239,.92);
+      box-shadow: 0 28px 72px rgba(31,20,16,.13);
+    }
+
+    .treatment-card .label {
+      display: inline-flex;
+      width: max-content;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: var(--rose);
+      background: rgba(124,59,63,.08);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .treatment-card h3 {
+      margin-top: 22px;
+      font-size: clamp(1.9rem, 3vw, 2.75rem);
+      line-height: .92;
+      letter-spacing: -.035em;
+    }
+
+    .treatment-card p {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.78;
+    }
+
+    .treatment-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .treatment-list span {
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: rgba(20,17,15,.72);
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .trust-runway {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden;
+      background: var(--line);
+    }
+
+    .trust-item {
+      min-height: 160px;
+      padding: 22px;
+      background: rgba(255,250,244,.82);
+    }
+
+    .trust-item b {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 24px;
+      border-radius: 999px;
+      color: var(--cream);
+      background: var(--ink);
+      font-size: .85rem;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.65rem;
+      line-height: .95;
+    }
+
+    .trust-item span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.65;
+    }
+
+    .suite-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .suite-card {
+      position: relative;
+      min-height: 260px;
+      padding: 24px;
+      border-radius: 26px;
+      overflow: hidden;
+      color: var(--cream);
+      background: var(--ink);
+      box-shadow: 0 22px 60px rgba(31,20,16,.14);
+    }
+
+    .suite-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(15,11,10,.86), rgba(15,11,10,.34)), var(--suite-image);
+      background-size: cover;
+      background-position: center;
+      transition: transform 1s var(--ease);
+    }
+
+    .suite-card:hover::before { transform: scale(1.06); }
+
+    .suite-card.suite-scar { --suite-image: url("./assets/scar-revision.jpg"); }
+    .suite-card.suite-lips { --suite-image: url("./assets/treatment-premium-tools.png"); }
+    .suite-card.suite-camouflage { --suite-image: url("./assets/hero-premium-clinic.png"); }
+
+    .suite-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .suite-card span {
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--champagne-2);
+    }
+
+    .suite-card h3 {
+      margin-top: 68px;
+      font-size: 2.55rem;
+      line-height: .9;
+      letter-spacing: -.04em;
+    }
+
+    .suite-card p {
+      max-width: 300px;
+      color: rgba(255,248,239,.7);
+      font-size: .9rem;
+    }
+
+    .quiz-shell {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(320px, .58fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .quiz-panel,
+    .quiz-result {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255,250,244,.86);
+      box-shadow: 0 22px 60px rgba(31,20,16,.08);
+    }
+
+    .quiz-panel { padding: 24px; }
+    .quiz-heading { font-size: clamp(2.4rem,4vw,4.2rem); }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quiz-option {
+      min-height: 92px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      color: var(--ink);
+      background: white;
+      text-align: left;
+      font-weight: 800;
+      transition: transform .25s var(--ease), border-color .25s ease, background .25s ease;
+    }
+
+    .quiz-option span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .quiz-option.active,
+    .quiz-option:hover {
+      transform: translateY(-3px);
+      border-color: rgba(124,59,63,.34);
+      background: #fff7ef;
+    }
+
+    .quiz-result {
+      position: relative;
+      padding: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(20,17,15,.96), rgba(58,36,32,.92)),
+        var(--ink);
+      color: var(--cream);
+    }
+
+    .quiz-result::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -90px;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(217,173,115,.26), transparent 68%);
+    }
+
+    .quiz-result h3 {
+      position: relative;
+      z-index: 1;
+      font-size: 3rem;
+      line-height: .9;
+      letter-spacing: -.04em;
+    }
+
+    .quiz-result p {
+      position: relative;
+      z-index: 1;
+      color: rgba(255,248,239,.72);
+      line-height: 1.8;
+    }
+
+    .quiz-result .btn { margin-top: 18px; }
+
+    .results-wall {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .result-large,
+    .result-stack article {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: var(--ink);
+      color: var(--cream);
+      box-shadow: var(--shadow);
+    }
+
+    .result-large { min-height: 640px; }
+    .result-stack {
+      display: grid;
+      gap: 18px;
+    }
+    .result-stack article { min-height: 311px; }
+
+    .result-large img,
+    .result-stack img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s var(--ease);
+    }
+
+    .result-large:hover img,
+    .result-stack article:hover img { transform: scale(1.05); }
+
+    .result-large::after,
+    .result-stack article::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(15,11,10,.78), transparent 58%);
+    }
+
+    .result-caption {
+      position: absolute;
+      z-index: 2;
+      left: 24px;
+      right: 24px;
+      bottom: 22px;
+    }
+
+    .result-caption strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.8rem, 3vw, 3.1rem);
+      line-height: .92;
+      letter-spacing: -.03em;
+    }
+
+    .result-caption span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255,248,239,.7);
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    .comparison {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .compare-frame {
+      position: relative;
+      min-height: 480px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+      user-select: none;
+    }
+
+    .compare-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .compare-after {
+      clip-path: inset(0 calc(100% - var(--compare, 52%)) 0 0);
+    }
+
+    .compare-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--compare, 52%);
+      width: 2px;
+      background: rgba(255,248,239,.9);
+      transform: translateX(-1px);
+      box-shadow: 0 0 26px rgba(255,248,239,.5);
+    }
+
+    .compare-line::after {
+      content: "DRAG";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--cream);
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+
+    .compare-range {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+    }
+
+    .compare-copy {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: #fffaf4;
+      box-shadow: 0 22px 60px rgba(31,20,16,.08);
+    }
+
+    .compare-copy h3 {
+      font-size: 3rem;
+      line-height: .9;
+      letter-spacing: -.04em;
+    }
+
+    .compare-copy p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .experience {
+      background: var(--night);
+      color: var(--cream);
+      overflow: hidden;
+    }
+
+    .experience .section-copy,
+    .experience .kicker { color: rgba(255,248,239,.7); }
+    .experience h2 em { color: var(--champagne-2); }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 28px;
+      overflow: hidden;
+      background: rgba(255,255,255,.12);
+    }
+
+    .journey-step {
+      min-height: 270px;
+      padding: 24px;
+      background: rgba(255,248,239,.07);
+      transition: background .35s ease, transform .35s var(--ease);
+    }
+
+    .journey-step:hover {
+      background: rgba(255,248,239,.13);
+      transform: translateY(-4px);
+    }
+
+    .journey-step span {
+      color: var(--champagne-2);
+      font-weight: 800;
+      font-size: .8rem;
+      letter-spacing: .18em;
+    }
+
+    .journey-step h3 {
+      margin-top: 34px;
+      font-size: 2.1rem;
+      line-height: .92;
+      letter-spacing: -.03em;
+    }
+
+    .journey-step p {
+      margin: 18px 0 0;
+      color: rgba(255,248,239,.66);
+      font-size: .9rem;
+      line-height: 1.8;
+    }
+
+    .reviews {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .review {
+      min-height: 286px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: #fffaf4;
+      box-shadow: 0 20px 52px rgba(35, 22, 17, 0.08);
+    }
+
+    .review p {
+      margin: 0;
+      color: var(--ink-2);
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+      line-height: 1.18;
+    }
+
+    .review footer {
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .insta-wall {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .insta-card {
+      position: relative;
+      min-height: 310px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--ink);
+      box-shadow: 0 22px 60px rgba(31,20,16,.12);
+    }
+
+    .insta-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s var(--ease);
+    }
+
+    .insta-card:hover img { transform: scale(1.06); }
+
+    .insta-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(15,11,10,.72), transparent 58%);
+    }
+
+    .insta-card span {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1;
+      color: rgba(255,248,239,.82);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #fffaf4;
+      box-shadow: 0 16px 42px rgba(31,20,16,.06);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px;
+      color: var(--ink);
+      background: transparent;
+      text-align: left;
+      font-weight: 850;
+    }
+
+    .faq-question::after {
+      content: "+";
+      color: var(--rose);
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .faq-item.open .faq-question::after { content: "-"; }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s var(--ease);
+    }
+
+    .faq-answer p {
+      margin: 0;
+      padding: 0 20px 20px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .concierge {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 90;
+      width: min(360px, calc(100% - 36px));
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 22px;
+      background: rgba(255,248,239,.82);
+      box-shadow: 0 24px 70px rgba(20,17,15,.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transform: translateY(120%);
+      transition: transform .45s var(--ease);
+    }
+
+    .concierge.visible { transform: translateY(0); }
+
+    .concierge strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.55rem;
+      line-height: .95;
+    }
+
+    .concierge p {
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.55;
+    }
+
+    .concierge-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .concierge-actions .btn {
+      flex: 1;
+      min-height: 42px;
+      padding: 0 12px;
+      font-size: .78rem;
+    }
+
+    .booking {
+      padding-bottom: 42px;
+    }
+
+    .booking-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, .88fr) minmax(320px, .62fr);
+      gap: 18px;
+      padding: 18px;
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(124,59,63,.12), transparent 35%),
+        linear-gradient(315deg, rgba(111,128,109,.14), transparent 34%),
+        var(--ink);
+      color: var(--cream);
+      box-shadow: 0 34px 90px rgba(20,17,15,.22);
+      overflow: hidden;
+    }
+
+    .booking-copy {
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(26px, 5vw, 56px);
+      border-radius: 26px;
+      overflow: hidden;
+      background:
+        linear-gradient(0deg, rgba(15,11,10,.82), rgba(15,11,10,.16)),
+        url("./assets/huma-clinic.jpg") center/cover;
+    }
+
+    .booking-copy h2 {
+      color: var(--cream);
+      max-width: 650px;
+    }
+
+    .kicker-light {
+      color: var(--champagne-2);
+    }
+
+    .booking-copy .section-copy {
+      max-width: 520px;
+      color: rgba(255,248,239,.74);
+    }
+
+    .contact-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .contact-pills a,
+    .contact-pills span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      color: rgba(255,248,239,.78);
+      background: rgba(255,255,255,.08);
+      font-size: .82rem;
+      font-weight: 700;
+    }
 
     .book-form {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px;
+      padding: 26px;
+      border-radius: 26px;
+      background: rgba(255,248,239,.94);
+      color: var(--ink);
     }
+
     .book-form h3 {
-      font-size: 1.2rem; font-weight: 600; margin-bottom: 20px;
+      margin-bottom: 20px;
+      font-size: 2.25rem;
+      line-height: .94;
+      letter-spacing: -.035em;
     }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-field { display: flex; flex-direction: column; gap: 6px; }
-    .form-field.full { grid-column: 1 / -1; }
-    .form-field label { font-size: 0.82rem; color: var(--muted); }
-    .form-field input, .form-field select, .form-field textarea {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 12px 14px;
-      color: var(--text); font-size: 0.9rem;
-      outline: none; transition: border-color 0.2s;
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      color: rgba(20,17,15,.72);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
+      min-height: 52px;
+      padding: 14px 15px;
+      border: 1px solid rgba(38,26,21,.14);
+      border-radius: 16px;
+      outline: 0;
+      background: #fffaf4;
+      color: var(--ink);
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
     }
-    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
-      border-color: rgba(201,150,90,0.4);
+
+    .field textarea {
+      min-height: 112px;
+      resize: vertical;
     }
-    .form-field textarea { min-height: 100px; resize: vertical; }
-    .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(245,237,228,0.28); }
-    .form-actions { margin-top: 20px; display: flex; gap: 12px; }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(124,59,63,.44);
+      box-shadow: 0 0 0 4px rgba(124,59,63,.08);
+      background: white;
+    }
+
     .form-status {
-      margin-top: 14px; padding: 12px 16px; border-radius: var(--radius-sm);
-      font-size: 0.88rem; display: none;
+      display: none;
+      margin-top: 14px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      font-size: .88rem;
+      font-weight: 700;
     }
+
     .form-status.show { display: block; }
-    .form-status.success { background: rgba(150,200,150,0.1); border: 1px solid rgba(150,200,150,0.2); color: #a8e0a8; }
-    .form-status.error { background: rgba(255,150,150,0.08); border: 1px solid rgba(255,150,150,0.18); color: #ffaaaa; }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 32px 20px; text-align: center;
-      border-top: 1px solid var(--border);
-      font-size: 0.84rem; color: var(--muted);
+    .form-status.success {
+      color: #31563a;
+      background: rgba(111,128,109,.16);
+      border: 1px solid rgba(111,128,109,.22);
+    }
+    .form-status.error {
+      color: #7c3b3f;
+      background: rgba(124,59,63,.1);
+      border: 1px solid rgba(124,59,63,.18);
     }
 
-    /* ── STICKY CTA ── */
-    .sticky-cta {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: min(640px, calc(100% - 32px));
-      background: rgba(14,9,8,0.9); backdrop-filter: blur(14px);
-      border: 1px solid var(--border); border-radius: 99px;
-      padding: 12px 14px 12px 20px;
-      display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      z-index: 50;
+    .footer {
+      padding: 28px 20px 38px;
+      color: rgba(20,17,15,.58);
+      font-size: .86rem;
     }
-    .sticky-cta p { font-size: 0.88rem; color: var(--muted); }
-    .sticky-cta strong { display: block; font-size: 0.94rem; color: var(--text); margin-bottom: 2px; }
-    .sticky-cta .btn { white-space: nowrap; padding: 10px 22px; font-size: 0.88rem; }
 
-    /* ── FADE IN ── */
-    .fade-in {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    .footer-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
     }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-image-wrap { display: none; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-img { max-height: 320px; width: 100%; object-position: top; }
-      .services-grid { grid-template-columns: 1fr 1fr; }
-      .results-grid { grid-template-columns: 1fr 1fr; }
-      .book-wrap { grid-template-columns: 1fr; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .75s ease, transform .75s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: .08s; }
+    .delay-2 { transition-delay: .16s; }
+    .delay-3 { transition-delay: .24s; }
+
+    @media (max-width: 980px) {
+      .nav { border-radius: 28px; align-items: start; flex-wrap: wrap; }
+      .nav-toggle { display: grid; }
+      .nav-links {
+        display: none;
+        flex-basis: 100%;
+        width: 100%;
+        padding: 10px 8px 8px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+      }
+      .nav.open .nav-links { display: flex; }
+      .nav-links a { padding: 12px 8px; }
+      .nav .btn { display: none; }
+      .hero-inner,
+      .section-head,
+      .signature-grid,
+      .results-wall,
+      .booking-shell {
+        grid-template-columns: 1fr;
+      }
+      .hero-inner { padding-top: 124px; gap: 34px; }
+      .hero-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .strip-item:nth-child(2) { border-right: 0; }
+      .strip-item:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.16); }
+      .feature-panel { min-height: 460px; }
+      .treatment-grid, .reviews, .suite-grid, .trust-runway, .insta-wall { grid-template-columns: 1fr 1fr; }
+      .quiz-shell, .comparison { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr 1fr; }
+      .booking-copy { min-height: 460px; }
     }
 
     @media (max-width: 640px) {
-      section { padding: 60px 16px; }
-      .nav-links { display: none; }
-      .nav-cta.desktop-only { display: none; }
-      .nav-hamburger { display: flex; }
-      .services-grid { grid-template-columns: 1fr; }
-      .results-grid { grid-template-columns: 1fr; }
-      .reviews-grid { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .about-cards { grid-template-columns: 1fr; }
-      .hero-stats { gap: 20px; }
-      .hero h1 { font-size: 3rem; }
-      .sticky-cta p { display: none; }
+      .cursor-aura { display: none; }
+      .nav { top: 10px; width: calc(100% - 20px); padding-left: 16px; }
+      .brand strong { font-size: 1.1rem; }
+      .brand span { font-size: .55rem; letter-spacing: .16em; }
+      .hero { min-height: 92vh; }
+      h1 { font-size: clamp(3.5rem, 18vw, 5.7rem); }
+      h1 span { transform: translateX(18px); }
+      .hero-inner { width: calc(100% - 28px); padding-bottom: 34px; }
+      .hero-actions .btn { width: 100%; }
+      .hero-strip {
+        width: calc(100% - 28px);
+        grid-template-columns: 1fr;
+        margin-bottom: 14px;
+      }
+      .strip-item { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+      .strip-item:last-child { border-bottom: 0; }
+      .section { padding: 76px 14px; }
+      .feature-panel { min-height: 420px; }
+      .feature-caption {
+        align-items: start;
+        flex-direction: column;
+      }
+      .treatment-grid, .reviews, .journey, .suite-grid, .trust-runway, .quiz-options, .insta-wall { grid-template-columns: 1fr; }
+      .result-large, .result-stack article { min-height: 360px; }
+      .compare-frame { min-height: 360px; }
+      .booking-shell { padding: 10px; border-radius: 26px; }
+      .booking-copy { min-height: 430px; padding: 24px; }
+      .book-form { padding: 20px; }
+      .book-form h3 { font-size: 1.9rem; }
+      .concierge { left: 12px; right: 12px; bottom: 12px; width: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-aura" id="cursorAura"></div>
 
-<div id="progress-bar"></div>
-
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-logo">
-    Huma Arshad
-    <span>Aesthetics & Micropigmentation</span>
-  </div>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#results">Results</a>
-    <a href="#testimonials">Reviews</a>
-    <a href="#book">Contact</a>
-    <a href="/admin.html">Admin</a>
-  </div>
-  <button class="nav-cta desktop-only btn" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book Now</button>
-  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#about" onclick="closeMenu()">About</a>
-  <a href="#services" onclick="closeMenu()">Services</a>
-  <a href="#results" onclick="closeMenu()">Results</a>
-  <a href="#testimonials" onclick="closeMenu()">Reviews</a>
-  <a href="#book" onclick="closeMenu()">Contact</a>
-  <a href="/admin.html" onclick="closeMenu()">Admin</a>
-  <a href="#book" class="nav-cta btn btn-gold" onclick="closeMenu()">Book a Consultation</a>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="hero-badge">Paramedical Micropigmentation Pioneer</div>
-      <h1>
-        Huma<br>
-        <em>Arshad</em>
-      </h1>
-      <p class="hero-desc">Pakistan's first and only certified paramedical micropigmentation specialist. Scar revision, vitiligo camouflage, brows, lip blush, and advanced skin treatments — crafted with precision in Islamabad.</p>
-      <div class="hero-actions">
-        <button class="btn btn-gold" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book a Consultation</button>
-        <a class="btn btn-outline" href="#services">View Services</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><strong>51.9K+</strong><span>Instagram Followers</span></div>
-        <div class="stat"><strong>Canada</strong><span>Certified</span></div>
-        <div class="stat"><strong>Pakistan's 1st</strong><span>Micropigmentation Specialist</span></div>
-      </div>
+  <nav class="nav" id="siteNav">
+    <a class="brand" href="#top" aria-label="Huma Arshad Aesthetics home">
+      <strong>Huma Arshad</strong>
+      <span>Aesthetics Studio</span>
+    </a>
+    <div class="nav-links">
+      <a href="#signature">Signature</a>
+      <a href="#treatments">Treatments</a>
+      <a href="#results">Results</a>
+      <a href="#experience">Experience</a>
+      <a href="#booking">Book</a>
+      <a href="/admin.html">Admin</a>
     </div>
-    <div class="hero-image-wrap">
-      <img class="hero-img" src="./assets/profile.jpg" alt="Huma Arshad" loading="eager">
-      <div class="hero-img-badge">
-        <strong>Huma Arshad</strong>
-        <span>Certified in Canada · Pioneer in Pakistan</span>
-      </div>
-    </div>
-  </div>
-</section>
+    <a class="btn btn-dark magnetic" href="#booking">Book Consultation</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu"><span></span></button>
+  </nav>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>Certified in Canada</span><span class="marquee-dot">·</span>
-    <span>First & Only in Pakistan</span><span class="marquee-dot">·</span>
-    <span>51,900+ Followers</span><span class="marquee-dot">·</span>
-    <span>Scar Revision</span><span class="marquee-dot">·</span>
-    <span>Vitiligo Camouflage</span><span class="marquee-dot">·</span>
-    <span>Real Results, No Filters</span><span class="marquee-dot">·</span>
-    <span>Lip Blush</span><span class="marquee-dot">·</span>
-    <span>Powder Brows</span><span class="marquee-dot">·</span>
-    <span>Certified in Canada</span><span class="marquee-dot">·</span>
-    <span>First & Only in Pakistan</span><span class="marquee-dot">·</span>
-    <span>51,900+ Followers</span><span class="marquee-dot">·</span>
-    <span>Scar Revision</span><span class="marquee-dot">·</span>
-    <span>Vitiligo Camouflage</span><span class="marquee-dot">·</span>
-    <span>Real Results, No Filters</span><span class="marquee-dot">·</span>
-    <span>Lip Blush</span><span class="marquee-dot">·</span>
-    <span>Powder Brows</span><span class="marquee-dot">·</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="about-grid fade-in">
-      <div>
-        <img class="about-img" src="./assets/huma-clinic.jpg" alt="Huma Arshad clinic" loading="lazy">
-      </div>
-      <div>
-        <div class="section-label">About Huma</div>
-        <h2>Pakistan's <em>leading</em> micropigmentation specialist</h2>
-        <p class="section-sub">Huma Arshad is the first and only certified paramedical micropigmentation specialist in Pakistan — trained in Canada and trusted by thousands of clients across Islamabad and beyond.</p>
-        <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;">With expertise spanning corrective scar work, vitiligo camouflage, and cosmetic enhancement, every treatment is approached with clinical precision and an artist's eye. Real results, no filters — documented and trusted by a community of 51,900+ followers.</p>
-        <div class="about-cards">
-          <div class="about-card">
-            <strong>Corrective Specialist</strong>
-            <span>Scar revision, vitiligo, burn marks, stretch marks, acne scarring</span>
+  <main id="top">
+    <section class="hero" aria-label="Huma Arshad Aesthetics">
+      <img class="hero-bg" src="./assets/hero-premium-clinic.png" alt="Premium aesthetics studio interior">
+      <div class="hero-noise"></div>
+      <div class="hero-inner">
+        <div class="reveal visible">
+          <div class="eyebrow">Paramedical Micropigmentation | Islamabad</div>
+          <h1>Huma Arshad <span>Aesthetics</span></h1>
+          <p class="hero-copy">A private corrective beauty studio for skin confidence, natural restoration, and precision pigment work. Scar revision, vitiligo camouflage, lip correction, brows, and skin therapy delivered with clinical calm and an artist's eye.</p>
+          <div class="hero-actions">
+            <a class="btn btn-light magnetic" href="#booking">Reserve Private Consultation</a>
+            <a class="btn btn-ghost btn-hero-outline magnetic" href="#results">See Client Results</a>
           </div>
-          <div class="about-card">
-            <strong>Cosmetic Artist</strong>
-            <span>Lip blush, microblading, powder brows, semi-permanent eyeliner</span>
+        </div>
+        <div class="hero-proof reveal visible delay-2">
+          <div class="proof-card">
+            <strong>Corrective, not cosmetic-only</strong>
+            <span>Focused on scars, pigment loss, dark lips, stretch marks, brows, and skin texture.</span>
           </div>
-          <div class="about-card">
-            <strong>Canada Certified</strong>
-            <span>Internationally trained with world-class micropigmentation credentials</span>
-          </div>
-          <div class="about-card">
-            <strong>51.9K Followers</strong>
-            <span>Built entirely on real client results — no retouching, no filters</span>
+          <div class="proof-card">
+            <strong>Real client proof</strong>
+            <span>Documented transformations, Instagram-visible results, and consultation-first planning.</span>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="hero-strip reveal visible delay-3">
+        <div class="strip-item"><strong data-count="51900">0</strong><span>Instagram community</span></div>
+        <div class="strip-item"><strong>Canada</strong><span>Certified training background</span></div>
+        <div class="strip-item"><strong>1:1</strong><span>Private treatment planning</span></div>
+        <div class="strip-item"><strong>No filters</strong><span>Result-led portfolio</span></div>
+      </div>
+    </section>
 
-<!-- SERVICES -->
-<section id="services" class="services-section">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Treatments</div>
-      <h2>Corrective & cosmetic care, <em>tailored to you</em></h2>
-      <p class="section-sub">From paramedical scar work to brows and skin treatments — every service is planned around your specific concern and skin type.</p>
-    </div>
-    <div class="filter-row fade-in">
-      <button class="filter-btn active" data-filter="all">All Services</button>
-      <button class="filter-btn" data-filter="paramedical">Paramedical</button>
-      <button class="filter-btn" data-filter="cosmetic">Cosmetic</button>
-      <button class="filter-btn" data-filter="skin">Skin Therapy</button>
-    </div>
-    <div class="services-grid" id="servicesGrid">
-      <div class="service-card fade-in" data-cat="paramedical">
-        <div class="service-tag">Paramedical</div>
-        <h3>Scar Revision</h3>
-        <p>Corrective pigment work for surgical scars, burn marks, acne scars, and skin tone irregularities. Custom plan based on area and concern.</p>
-        <button class="btn btn-gold" onclick="openBooking('Scar Revision')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="paramedical">
-        <div class="service-tag">Paramedical</div>
-        <h3>Vitiligo Camouflage</h3>
-        <p>Targeted camouflage for face, body, and lips. Custom pigment matching for natural-looking results. Consultation required.</p>
-        <button class="btn btn-gold" onclick="openBooking('Vitiligo Camouflage')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="paramedical">
-        <div class="service-tag">Paramedical</div>
-        <h3>Stretch Mark Camouflage</h3>
-        <p>Advanced micropigmentation to soften stretch marks and restore a smoother appearance. Requires color assessment first.</p>
-        <button class="btn btn-gold" onclick="openBooking('Stretch Mark Camouflage')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="paramedical">
-        <div class="service-tag">Paramedical</div>
-        <h3>3D Areola Restoration</h3>
-        <p>Restorative areola micropigmentation for cancer survivors and post-surgical clients. Deeply personal and precision-led.</p>
-        <button class="btn btn-gold" onclick="openBooking('3D Areola Restoration')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="cosmetic">
-        <div class="service-tag">Cosmetic</div>
-        <h3>Lip Blush</h3>
-        <p>Soft, elevated lip color that brings balance and freshness without heavy makeup. Custom shades matched to skin tone.</p>
-        <button class="btn btn-gold" onclick="openBooking('Lip Blush')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="cosmetic">
-        <div class="service-tag">Cosmetic</div>
-        <h3>Dark Lips Correction</h3>
-        <p>Brightens uneven lip tone using color neutralization for a more balanced, refined natural appearance.</p>
-        <button class="btn btn-gold" onclick="openBooking('Dark Lips Correction')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="cosmetic">
-        <div class="service-tag">Cosmetic</div>
-        <h3>Powder Brows & Microblading</h3>
-        <p>Shape-led brow design using microblading, powder brows, or halal henna. Natural everyday definition.</p>
-        <button class="btn btn-gold" onclick="openBooking('Powder Brows')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="cosmetic">
-        <div class="service-tag">Cosmetic</div>
-        <h3>Semi-Permanent Eyeliner</h3>
-        <p>Clean, polished eyeliner that enhances your natural eye shape. Long-lasting and low maintenance.</p>
-        <button class="btn btn-gold" onclick="openBooking('Semi-Permanent Eyeliner')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="skin">
-        <div class="service-tag">Skin Therapy</div>
-        <h3>Phibright Microneedling</h3>
-        <p>Premium glow treatment for acne scars, wrinkles, fine lines, and texture. Popular for post-acne concerns. No downtime.</p>
-        <button class="btn btn-gold" onclick="openBooking('Phibright Microneedling')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="skin">
-        <div class="service-tag">Skin Therapy</div>
-        <h3>Korean Glass Skin Facial</h3>
-        <p>High-end glow treatment for hydration, smoothness, and visibly polished skin. An excellent add-on experience.</p>
-        <button class="btn btn-gold" onclick="openBooking('Korean Glass Skin Facial')">Book This</button>
-      </div>
-      <div class="service-card fade-in" data-cat="skin">
-        <div class="service-tag">Skin Therapy</div>
-        <h3>Hair & Scalp Growth</h3>
-        <p>Growth-focused scalp treatment for fuller-looking hair and density support. Ideal for repeat-care clients.</p>
-        <button class="btn btn-gold" onclick="openBooking('Hair & Scalp Growth')">Book This</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RESULTS -->
-<section id="results">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Before & After</div>
-      <h2>Real transformations. <em>Documented outcomes.</em></h2>
-      <p class="section-sub">Every result shown is real. No filters, no retouching — documented under consistent conditions. View the full gallery on Instagram.</p>
-    </div>
-    <div class="results-grid fade-in">
-      <div class="result-card">
-        <img class="result-img" src="./assets/scar-revision.jpg" alt="Scar revision result" loading="lazy">
-        <div class="result-label">
-          <strong>Scar Revision</strong>
-          <span>Surgical & trauma scar camouflage</span>
-        </div>
-      </div>
-      <div class="result-card">
-        <img class="result-img" src="./assets/acne-treatment.jpg" alt="Acne treatment result" loading="lazy">
-        <div class="result-label">
-          <strong>Acne & Pigmentation</strong>
-          <span>Microneedling & skin renewal</span>
-        </div>
-      </div>
-      <div class="result-card">
-        <img class="result-img" src="./assets/facelift-scar.jpg" alt="Facelift scar result" loading="lazy">
-        <div class="result-label">
-          <strong>Facial Scar Work</strong>
-          <span>Post-facelift scar revision</span>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:32px;" class="fade-in">
-      <a class="btn btn-outline" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer">View Full Gallery on Instagram →</a>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="testimonials-section">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-label">Client Words</div>
-      <h2>What clients say after <em>their transformation</em></h2>
-      <p class="section-sub">Shared directly by clients on Instagram after their treatments.</p>
-    </div>
-    <div class="reviews-grid">
-      <div class="review-card fade-in">
-        <div class="review-service">Phibright Microneedling</div>
-        <p class="review-text">I had my second treatment today and I'm pleasantly surprised by the noticeable changes. Open pores, acne scars, and fine lines have visibly improved. Results are quick with no downtime. You are absolutely fantastic at what you do.</p>
-        <div class="review-footer">
-          <div><strong>Client Message</strong><span>Shared on Instagram</span></div>
-          <div class="stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="review-card fade-in">
-        <div class="review-service">Scar & Pigmentation Care</div>
-        <p class="review-text">This is the first time a procedure has really worked on my acne scars and pigmentation. I have been to so many doctors with no effect. I can see a visible difference in just 2 sessions. May Allah reward you for this.</p>
-        <div class="review-footer">
-          <div><strong>Client Message</strong><span>Shared on Instagram</span></div>
-          <div class="stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="review-card fade-in">
-        <div class="review-service">BB Glow</div>
-        <p class="review-text">Thank you so much Huma. Loving the results already. My skin is glowing. It was so nice to meet you. Lots of love!</p>
-        <div class="review-footer">
-          <div><strong>Client Message</strong><span>Shared on Instagram</span></div>
-          <div class="stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="review-card fade-in">
-        <div class="review-service">Hair & Scalp Growth</div>
-        <p class="review-text">I'm absolutely thrilled. I never thought I'd see my hairline come back like this. My hair looks fuller and I feel younger. The white hairs turning back to black is something I didn't imagine was possible. Thank you for giving me my old self back.</p>
-        <div class="review-footer">
-          <div><strong>Client Message</strong><span>Shared on Instagram</span></div>
-          <div class="stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="review-card fade-in">
-        <div class="review-service">Acne Scar Results</div>
-        <p class="review-text">I am amazed by the results. I haven't seen such results with anything else. My skin is feeling soft, radiant, and the acne scars are almost gone. Will come for my next session. Thank you so much.</p>
-        <div class="review-footer">
-          <div><strong>Client Message</strong><span>Shared on Instagram</span></div>
-          <div class="stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="review-card fade-in">
-        <div class="review-service">Microneedling Glow</div>
-        <p class="review-text">Omg I am so happy with the microneedling results. Can't thank you enough. Such glow and my acne scarring and pigmentation is almost gone. Thank you so much!</p>
-        <div class="review-footer">
-          <div><strong>Client Message</strong><span>Shared on Instagram</span></div>
-          <div class="stars">★★★★★</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BOOK -->
-<section id="book">
-  <div class="container">
-    <div class="book-wrap">
-      <div class="book-info fade-in">
-        <div class="section-label">Book a Consultation</div>
-        <h2>Start your <em>transformation</em> today</h2>
-        <p class="section-sub" style="margin-bottom:0;">Fill the form to send a consultation request. Huma will follow up personally to discuss your treatment plan and preferred appointment time.</p>
-        <div class="contact-items">
-          <div class="contact-item">
-            <strong>Location</strong>
-            <span>Islamabad, Pakistan</span>
+    <section class="section" id="signature">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Signature standard</div>
+            <h2>Quiet luxury, built around <em>visible confidence.</em></h2>
           </div>
-          <div class="contact-item">
-            <strong>Instagram</strong>
-            <a href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer">@humachaudhry.aesthetics</a>
-          </div>
-          <div class="contact-item">
-            <strong>Hours</strong>
-            <span>By appointment only — book via this form or Instagram DM</span>
-          </div>
+          <p class="section-copy">A private studio experience shaped around precision, discretion, and natural-looking restoration for clients who want expert corrective beauty care.</p>
         </div>
-      </div>
-      <div class="book-form fade-in">
-        <h3>Request a Consultation</h3>
-        <form id="bookForm">
-          <div class="form-grid">
-            <div class="form-field">
-              <label>Full Name *</label>
-              <input type="text" id="fname" placeholder="Your full name" required>
+
+        <div class="signature-grid">
+          <article class="feature-panel reveal">
+            <img src="./assets/founder-premium-portrait.png" alt="Premium founder portrait for Huma Arshad Aesthetics">
+            <div class="feature-caption">
+              <h3>Precision by Huma</h3>
+              <p>Corrective pigment work guided by facial balance, skin undertone, scar behavior, and client comfort.</p>
             </div>
-            <div class="form-field">
-              <label>Email *</label>
-              <input type="email" id="femail" placeholder="Your email" required>
+          </article>
+          <div class="atelier">
+            <article class="atelier-card reveal delay-1">
+              <span class="num">01</span>
+              <h3>Consultation-led plan</h3>
+              <p>Every client starts with a focused review of skin history, expectations, pigment match, and treatment readiness.</p>
+            </article>
+            <article class="atelier-card reveal delay-2">
+              <span class="num">02</span>
+              <h3>Premium corrective menu</h3>
+              <p>Scar revision, vitiligo camouflage, areola restoration, lip correction, brow design, microneedling, and glass skin therapy.</p>
+            </article>
+            <article class="atelier-card reveal delay-3">
+              <span class="num">03</span>
+              <h3>Result-first aftercare</h3>
+              <p>Clear expectations, careful healing guidance, and follow-up thinking for work that looks refined, soft, and natural.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="trust-runway reveal">
+          <div class="trust-item"><b>01</b><strong>Canada trained</strong><span>International corrective beauty discipline, adapted for Islamabad clients.</span></div>
+          <div class="trust-item"><b>02</b><strong>Private studio</strong><span>Consultation-first setting for sensitive skin, scars, pigment, and lips.</span></div>
+          <div class="trust-item"><b>03</b><strong>Real proof</strong><span>Visible client journeys, documented transformations, and confidence-led care.</span></div>
+          <div class="trust-item"><b>04</b><strong>Aftercare-led</strong><span>Healing, expectations, and refinement discussed before booking.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Scar revision</span><span>Vitiligo camouflage</span><span>Lip blush</span><span>Dark lips correction</span><span>Powder brows</span><span>Glass skin therapy</span>
+        <span>Scar revision</span><span>Vitiligo camouflage</span><span>Lip blush</span><span>Dark lips correction</span><span>Powder brows</span><span>Glass skin therapy</span>
+      </div>
+    </div>
+
+    <section class="section treatments" id="treatments">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Treatment house</div>
+            <h2>One studio. Three premium <em>transformation paths.</em></h2>
+          </div>
+          <p class="section-copy">Choose the path that fits your concern: corrective restoration, cosmetic refinement, or advanced skin renewal.</p>
+        </div>
+
+        <div class="treatment-grid">
+          <article class="treatment-card reveal">
+            <div>
+              <span class="label">Paramedical</span>
+              <h3>Restoration Work</h3>
+              <p>Corrective pigment and texture work for clients who want skin marks softened, balanced, or restored with discretion.</p>
+              <div class="treatment-list">
+                <span>Scar revision</span><span>Vitiligo</span><span>Stretch marks</span><span>Areola</span>
+              </div>
             </div>
-            <div class="form-field">
-              <label>Phone / WhatsApp *</label>
-              <input type="text" id="fphone" placeholder="+92 300 0000000" required>
+            <a class="btn btn-dark magnetic" href="#booking" data-service="Scar Revision">Book Restoration</a>
+          </article>
+          <article class="treatment-card reveal delay-1">
+            <div>
+              <span class="label">Cosmetic</span>
+              <h3>Refined Features</h3>
+              <p>Soft definition for lips, brows, and eyes. Designed to look polished without overpowering natural expression.</p>
+              <div class="treatment-list">
+                <span>Lip blush</span><span>Dark lips</span><span>Brows</span><span>Eyeliner</span>
+              </div>
             </div>
-            <div class="form-field">
-              <label>Service of Interest *</label>
-              <select id="fservice" required>
-                <option value="">Select a treatment</option>
-                <option>Scar Revision</option>
-                <option>Vitiligo Camouflage</option>
-                <option>Stretch Mark Camouflage</option>
-                <option>3D Areola Restoration</option>
-                <option>Lip Blush</option>
-                <option>Dark Lips Correction</option>
-                <option>Powder Brows & Microblading</option>
-                <option>Semi-Permanent Eyeliner</option>
-                <option>Phibright Microneedling</option>
-                <option>Korean Glass Skin Facial</option>
-                <option>Hair & Scalp Growth</option>
-                <option>General Consultation</option>
-              </select>
+            <a class="btn btn-dark magnetic" href="#booking" data-service="Lip Blush">Book Refinement</a>
+          </article>
+          <article class="treatment-card reveal delay-2">
+            <div>
+              <span class="label">Skin therapy</span>
+              <h3>Texture Renewal</h3>
+              <p>Targeted skin treatments for glow, acne scars, pores, fine lines, and scalp confidence with visible progress.</p>
+              <div class="treatment-list">
+                <span>Microneedling</span><span>Glass skin</span><span>Acne scars</span><span>Scalp growth</span>
+              </div>
             </div>
-            <div class="form-field">
-              <label>Preferred Date</label>
-              <input type="date" id="fdate">
-            </div>
-            <div class="form-field">
-              <label>Preferred Time</label>
-              <input type="text" id="ftime" placeholder="e.g. 2:00 PM">
-            </div>
-            <div class="form-field full">
-              <label>Your Concern or Message *</label>
-              <textarea id="fnotes" placeholder="Tell me about your concern — scars, dark lips, brows, skin, or anything else." required></textarea>
+            <a class="btn btn-dark magnetic" href="#booking" data-service="Phibright Microneedling">Book Skin Therapy</a>
+          </article>
+        </div>
+
+        <div class="suite-grid reveal">
+          <a class="suite-card suite-scar" href="#booking" data-service="Scar Revision">
+            <span>Service suite</span>
+            <h3>Scar Revision</h3>
+            <p>For surgical marks, acne scarring, trauma marks, and visible texture concerns.</p>
+          </a>
+          <a class="suite-card suite-lips" href="#booking" data-service="Dark Lips Correction">
+            <span>Service suite</span>
+            <h3>Lip Correction</h3>
+            <p>Neutralization and blush work for soft, balanced lip tone.</p>
+          </a>
+          <a class="suite-card suite-camouflage" href="#booking" data-service="Vitiligo Camouflage">
+            <span>Service suite</span>
+            <h3>Vitiligo Camouflage</h3>
+            <p>Consultation-led pigment matching for face, body, and lips.</p>
+          </a>
+        </div>
+
+        <div class="quiz-shell reveal" id="quiz">
+          <div class="quiz-panel">
+            <div class="kicker">Treatment quiz</div>
+            <h2 class="quiz-heading">What do you want to change?</h2>
+            <div class="quiz-options">
+              <button class="quiz-option active" type="button" data-quiz-service="Scar Revision" data-quiz-title="Restoration consult" data-quiz-copy="Best starting point for scars, surgical marks, acne texture, and stretch mark camouflage. Huma reviews skin history before recommending treatment.">Scars or marks<span>Texture, surgical marks, acne scars</span></button>
+              <button class="quiz-option" type="button" data-quiz-service="Dark Lips Correction" data-quiz-title="Lip correction consult" data-quiz-copy="Best for dark lips, uneven tone, or a softer lip blush result. Consultation confirms undertone and session plan.">Dark lips<span>Neutralization, blush, tone balance</span></button>
+              <button class="quiz-option" type="button" data-quiz-service="Powder Brows & Microblading" data-quiz-title="Brow refinement consult" data-quiz-copy="Best for soft definition, shape correction, and low-maintenance daily polish.">Brows<span>Powder brows, microblading, shape</span></button>
+              <button class="quiz-option" type="button" data-quiz-service="Vitiligo Camouflage" data-quiz-title="Camouflage consult" data-quiz-copy="Best for pigment loss, vitiligo camouflage, and discreet color matching on suitable areas.">Pigment loss<span>Vitiligo, tone matching, camouflage</span></button>
             </div>
           </div>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-gold">Send Request</button>
-            <a class="btn btn-outline" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer">Instagram DM</a>
+          <div class="quiz-result">
+            <h3 id="quizTitle">Restoration consult</h3>
+            <p id="quizCopy">Best starting point for scars, surgical marks, acne texture, and stretch mark camouflage. Huma reviews skin history before recommending treatment.</p>
+            <a class="btn btn-light magnetic" href="#booking" id="quizCta" data-service="Scar Revision">Book this path</a>
           </div>
-          <div class="form-status" id="formStatus"></div>
-        </form>
+        </div>
       </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Client proof</div>
+            <h2>Results with <em>texture, tone, and trust.</em></h2>
+          </div>
+          <p class="section-copy">Every concern is personal. Results begin with careful assessment, realistic planning, and work tailored to your skin.</p>
+        </div>
+
+        <div class="results-wall">
+          <article class="result-large reveal">
+            <img src="./assets/scar-revision.jpg" alt="Scar revision result">
+            <div class="result-caption">
+              <strong>Corrective Scar Work</strong>
+              <span>Softened appearance through precision pigment planning</span>
+            </div>
+          </article>
+          <div class="result-stack">
+            <article class="reveal delay-1">
+              <img src="./assets/acne-treatment.jpg" alt="Acne scar treatment result">
+              <div class="result-caption">
+                <strong>Skin Texture</strong>
+                <span>Microneedling and renewal-led progress</span>
+              </div>
+            </article>
+            <article class="reveal delay-2">
+              <img src="./assets/facelift-scar.jpg" alt="Facelift scar revision result">
+              <div class="result-caption">
+                <strong>Facial Detail</strong>
+                <span>Subtle correction for visible surgical marks</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="comparison reveal">
+          <div class="compare-frame" id="compareFrame">
+            <img src="./assets/review-scar-journey.jpg" alt="Client result reference image">
+            <img class="compare-after" src="./assets/review-real-results.jpg" alt="Client result reference image detail">
+            <div class="compare-line"></div>
+            <input class="compare-range" id="compareRange" type="range" min="18" max="82" value="52" aria-label="Compare result images">
+          </div>
+          <div class="compare-copy">
+            <div class="kicker">Interactive proof</div>
+            <h3>Drag the result detail.</h3>
+            <p>Explore result references up close, then book a consultation to discuss what is realistic for your skin, concern, and healing timeline.</p>
+            <a class="btn btn-dark magnetic" href="#booking" data-service="Scar Revision">Ask about results</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section experience" id="experience">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Private experience</div>
+            <h2>A calmer path from concern to <em>confidence.</em></h2>
+          </div>
+          <p class="section-copy">Premium does not mean loud. It means the client feels handled from first touch through aftercare.</p>
+        </div>
+        <div class="journey">
+          <article class="journey-step reveal"><span>01</span><h3>Listen</h3><p>Concern, skin history, expectations, and timeline are understood before treatment is suggested.</p></article>
+          <article class="journey-step reveal delay-1"><span>02</span><h3>Map</h3><p>Huma maps tone, shape, pigment behavior, treatment area, and realistic correction strategy.</p></article>
+          <article class="journey-step reveal delay-2"><span>03</span><h3>Treat</h3><p>Appointments are focused, private, and precise, with work paced around comfort and healing.</p></article>
+          <article class="journey-step reveal delay-3"><span>04</span><h3>Refine</h3><p>Aftercare and follow-up thinking keep the result soft, natural, and long-term focused.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Client words</div>
+            <h2>Luxury is when clients feel <em>seen.</em></h2>
+          </div>
+          <p class="section-copy">Social proof is presented as editorial quotes, not noisy review blocks.</p>
+        </div>
+        <div class="reviews">
+          <article class="review reveal"><p>"This is the first time a procedure has really worked on my acne scars and pigmentation."</p><footer>Scar and pigmentation client</footer></article>
+          <article class="review reveal delay-1"><p>"My skin is glowing. It was so nice to meet you. Lots of love."</p><footer>BB Glow client</footer></article>
+          <article class="review reveal delay-2"><p>"I never thought I would see my hairline come back like this."</p><footer>Hair and scalp growth client</footer></article>
+        </div>
+
+        <div class="insta-wall reveal">
+          <a class="insta-card" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer"><img src="./assets/review-kashaan.jpg" alt="Instagram proof"><span>Client message proof</span></a>
+          <a class="insta-card" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer"><img src="./assets/review-real-results.jpg" alt="Instagram proof"><span>Real result story</span></a>
+          <a class="insta-card" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer"><img src="./assets/review-scar-journey.jpg" alt="Instagram proof"><span>Scar journey highlight</span></a>
+          <a class="insta-card" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer"><img src="./assets/acne-treatment.jpg" alt="Instagram proof"><span>Skin texture result</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Client questions</div>
+            <h2>Know before you <em>book.</em></h2>
+          </div>
+          <p class="section-copy">A few important details before booking your private consultation.</p>
+        </div>
+        <div class="faq-list reveal">
+          <article class="faq-item open">
+            <button class="faq-question" type="button">How many sessions will I need?</button>
+            <div class="faq-answer"><p>It depends on skin condition, treatment area, pigment response, and healing. Huma confirms expected sessions after consultation.</p></div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">Can all scars or pigment concerns be treated?</button>
+            <div class="faq-answer"><p>No. Suitability depends on scar maturity, skin health, location, tone, and medical history. Consultation protects result quality.</p></div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">Is dark lips correction immediate?</button>
+            <div class="faq-answer"><p>Lip correction usually heals in stages. Neutralization and blush work may need more than one session for a soft balanced result.</p></div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">How do I book fastest?</button>
+            <div class="faq-answer"><p>Use the consultation form or Instagram DM. Share your concern, photos if comfortable, preferred timing, and treatment interest.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section booking" id="booking">
+      <div class="container">
+        <div class="booking-shell reveal">
+          <div class="booking-copy">
+            <div>
+              <div class="kicker kicker-light">Reserve</div>
+              <h2>Begin with a private consultation.</h2>
+              <p class="section-copy">Share your concern, preferred timing, and treatment interest. Huma will review and respond personally.</p>
+              <div class="contact-pills">
+                <span>Islamabad, Pakistan</span>
+                <a href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer">@humachaudhry.aesthetics</a>
+              </div>
+            </div>
+            <a class="btn btn-light magnetic" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer">Instagram DM</a>
+          </div>
+
+          <form class="book-form" id="bookForm">
+            <h3>Request consultation</h3>
+            <div class="form-grid">
+              <div class="field">
+                <label for="fname">Full name</label>
+                <input type="text" id="fname" placeholder="Your full name" required>
+              </div>
+              <div class="field">
+                <label for="femail">Email</label>
+                <input type="email" id="femail" placeholder="you@example.com" required>
+              </div>
+              <div class="field">
+                <label for="fphone">Phone / WhatsApp</label>
+                <input type="text" id="fphone" placeholder="+92 300 0000000" required>
+              </div>
+              <div class="field">
+                <label for="fservice">Treatment interest</label>
+                <select id="fservice" required>
+                  <option value="">Select treatment</option>
+                  <option>Scar Revision</option>
+                  <option>Vitiligo Camouflage</option>
+                  <option>Stretch Mark Camouflage</option>
+                  <option>3D Areola Restoration</option>
+                  <option>Lip Blush</option>
+                  <option>Dark Lips Correction</option>
+                  <option>Powder Brows & Microblading</option>
+                  <option>Semi-Permanent Eyeliner</option>
+                  <option>Phibright Microneedling</option>
+                  <option>Korean Glass Skin Facial</option>
+                  <option>Hair & Scalp Growth</option>
+                  <option>General Consultation</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="fnotes">Concern</label>
+                <textarea id="fnotes" placeholder="Tell Huma what you want corrected, restored, or refined." required></textarea>
+              </div>
+              <button class="btn btn-dark magnetic" type="submit">Send Request</button>
+              <div class="form-status" id="formStatus"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© 2026 Huma Arshad Aesthetics. Islamabad, Pakistan.</span>
+      <a href="https://instagram.com/humachaudhry.aesthetics" target="_blank" rel="noreferrer">@humachaudhry.aesthetics</a>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 Huma Arshad Aesthetics · Islamabad, Pakistan · <a href="https://instagram.com/humachaudhry.aesthetics" target="_blank" style="color:var(--gold)">@humachaudhry.aesthetics</a></p>
-</footer>
+  <aside class="concierge" id="concierge" aria-label="Private consultation concierge">
+    <strong>Private consultation?</strong>
+    <p>Tell Huma what you want corrected or refined. Fastest path: form or Instagram DM.</p>
+    <div class="concierge-actions">
+      <a class="btn btn-dark magnetic" href="#booking">Book</a>
+      <a class="btn btn-ghost magnetic" href="https://www.instagram.com/humachaudhry.aesthetics/" target="_blank" rel="noreferrer">DM</a>
+    </div>
+  </aside>
 
-<!-- STICKY CTA -->
-<div class="sticky-cta" id="stickyCta">
-  <div>
-    <strong>Book with Huma Arshad</strong>
-    <p>Pakistan's leading micropigmentation specialist</p>
-  </div>
-  <button class="btn btn-gold" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book Now</button>
-</div>
+  <script>
+    const nav = document.getElementById("siteNav");
+    const navToggle = document.getElementById("navToggle");
+    const scrollProgress = document.getElementById("scrollProgress");
+    const cursorAura = document.getElementById("cursorAura");
+    const heroBg = document.querySelector(".hero-bg");
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-<script>
-  // Mobile menu
-  function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
-  }
-  function closeMenu() {
-    document.getElementById('mobileMenu').classList.remove('open');
-  }
+    navToggle.addEventListener("click", () => nav.classList.toggle("open"));
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => nav.classList.remove("open"));
+    });
 
-  // Service filter
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.service-card').forEach(card => {
-        card.style.display = (filter === 'all' || card.dataset.cat === filter) ? 'flex' : 'none';
+    document.querySelectorAll("[data-service]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const select = document.getElementById("fservice");
+        select.value = button.dataset.service;
       });
     });
-  });
 
-  // Booking service pre-fill
-  function openBooking(service) {
-    document.getElementById('fservice').value = service;
-    document.getElementById('book').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // Scroll progress
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    document.getElementById('progress-bar').style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
-  });
-
-  // Fade in on scroll
-  const fadeEls = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  fadeEls.forEach(el => observer.observe(el));
-
-  // Hide sticky CTA when on book section
-  const bookSection = document.getElementById('book');
-  const stickyCta = document.getElementById('stickyCta');
-  const stickyObserver = new IntersectionObserver(entries => {
-    stickyCta.style.display = entries[0].isIntersecting ? 'none' : 'flex';
-  }, { threshold: 0.2 });
-  stickyObserver.observe(bookSection);
-
-  // Form submit
-  document.getElementById('bookForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const status = document.getElementById('formStatus');
-    const payload = {
-      fullName: document.getElementById('fname').value,
-      email: document.getElementById('femail').value,
-      phone: document.getElementById('fphone').value,
-      service: document.getElementById('fservice').value,
-      preferredDate: document.getElementById('fdate').value,
-      preferredTime: document.getElementById('ftime').value,
-      message: document.getElementById('fnotes').value,
-      source: 'website'
-    };
-
-    try {
-      const res = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+    const compareFrame = document.getElementById("compareFrame");
+    const compareRange = document.getElementById("compareRange");
+    if (compareFrame && compareRange) {
+      compareRange.addEventListener("input", () => {
+        compareFrame.style.setProperty("--compare", `${compareRange.value}%`);
       });
-      if (res.ok) {
-        status.className = 'form-status success show';
-        status.textContent = '✓ Booking request sent! Huma will be in touch shortly.';
-        e.target.reset();
-      } else {
-        throw new Error('Server error');
-      }
-    } catch {
-      // Fallback — save locally + show success
-      localStorage.setItem('huma-booking', JSON.stringify({ ...payload, savedAt: new Date().toISOString() }));
-      status.className = 'form-status success show';
-      status.textContent = '✓ Request saved! You can also DM on Instagram for a faster response.';
-      e.target.reset();
     }
-  });
-</script>
 
+    const quizTitle = document.getElementById("quizTitle");
+    const quizCopy = document.getElementById("quizCopy");
+    const quizCta = document.getElementById("quizCta");
+    document.querySelectorAll(".quiz-option").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".quiz-option").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        quizTitle.textContent = button.dataset.quizTitle;
+        quizCopy.textContent = button.dataset.quizCopy;
+        quizCta.dataset.service = button.dataset.quizService;
+        document.getElementById("fservice").value = button.dataset.quizService;
+      });
+    });
+
+    document.querySelectorAll(".faq-item").forEach((item) => {
+      const answer = item.querySelector(".faq-answer");
+      if (item.classList.contains("open")) {
+        answer.style.maxHeight = `${answer.scrollHeight}px`;
+      }
+      item.querySelector(".faq-question").addEventListener("click", () => {
+        const isOpen = item.classList.toggle("open");
+        answer.style.maxHeight = isOpen ? `${answer.scrollHeight}px` : "0px";
+      });
+    });
+
+    const concierge = document.getElementById("concierge");
+    function updateConcierge() {
+      if (!concierge) return;
+      concierge.classList.toggle("visible", window.scrollY > window.innerHeight * 0.65);
+    }
+
+    function updateScroll() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? window.scrollY / max : 0;
+      scrollProgress.style.width = `${ratio * 100}%`;
+      if (heroBg && !prefersReduced) {
+        heroBg.style.setProperty("--hero-shift", `${window.scrollY * 0.12}px`);
+      }
+    }
+
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    updateScroll();
+    window.addEventListener("scroll", updateConcierge, { passive: true });
+    updateConcierge();
+
+    if (!prefersReduced) {
+      window.addEventListener("pointermove", (event) => {
+        cursorAura.style.opacity = "1";
+        cursorAura.style.left = `${event.clientX}px`;
+        cursorAura.style.top = `${event.clientY}px`;
+      }, { passive: true });
+
+      document.querySelectorAll(".magnetic").forEach((el) => {
+        el.addEventListener("pointermove", (event) => {
+          const rect = el.getBoundingClientRect();
+          const x = (event.clientX - rect.left - rect.width / 2) * 0.16;
+          const y = (event.clientY - rect.top - rect.height / 2) * 0.16;
+          el.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        el.addEventListener("pointerleave", () => {
+          el.style.transform = "";
+        });
+      });
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll(".reveal:not(.visible)").forEach((el) => revealObserver.observe(el));
+
+    const countEl = document.querySelector("[data-count]");
+    if (countEl && !prefersReduced) {
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const target = Number(countEl.dataset.count);
+          const start = performance.now();
+          const duration = 1400;
+          function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            countEl.textContent = `${Math.round(target * eased).toLocaleString()}+`;
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          counterObserver.disconnect();
+        });
+      }, { threshold: 0.5 });
+      counterObserver.observe(countEl);
+    } else if (countEl) {
+      countEl.textContent = `${Number(countEl.dataset.count).toLocaleString()}+`;
+    }
+
+    document.getElementById("bookForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const status = document.getElementById("formStatus");
+      const payload = {
+        fullName: document.getElementById("fname").value.trim(),
+        email: document.getElementById("femail").value.trim(),
+        phone: document.getElementById("fphone").value.trim(),
+        service: document.getElementById("fservice").value,
+        message: document.getElementById("fnotes").value.trim(),
+        source: "premium-landing"
+      };
+
+      status.className = "form-status";
+      status.textContent = "";
+
+      try {
+        const response = await fetch("/api/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error("Booking request failed");
+        status.className = "form-status success show";
+        status.textContent = "Request sent. Huma will be in touch shortly.";
+        event.target.reset();
+      } catch (error) {
+        localStorage.setItem("huma-booking", JSON.stringify({ ...payload, savedAt: new Date().toISOString() }));
+        status.className = "form-status success show";
+        status.textContent = "Request saved locally. For fastest response, send an Instagram DM.";
+        event.target.reset();
+      }
+    });
+  </script>
 </body>
 </html>
