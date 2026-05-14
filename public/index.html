@@ -890,6 +890,256 @@
 
     .quiz-result .btn { margin-top: 18px; }
 
+    .treatment-map {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(300px, .82fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .map-tabs {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .map-tab {
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: rgba(20,17,15,.72);
+      background: rgba(255,250,244,.78);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: background .25s ease, color .25s ease, transform .25s var(--ease);
+    }
+
+    .map-tab.active,
+    .map-tab:hover {
+      color: var(--cream);
+      background: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .map-figure {
+      position: relative;
+      min-height: 610px;
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        linear-gradient(0deg, rgba(15,11,10,.16), rgba(15,11,10,.08)),
+        url("./assets/treatment-map-premium.png") center / cover,
+        linear-gradient(145deg, #201410, #0f0b0a);
+      box-shadow: var(--shadow);
+    }
+
+    .body-line {
+      position: absolute;
+      inset: 56px 24px 42px;
+      opacity: 0;
+    }
+
+    .body-line svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 22px 30px rgba(0,0,0,.18));
+    }
+
+    .map-point {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      z-index: 2;
+      width: 14px;
+      height: 14px;
+      border: 1px solid rgba(255,248,239,.82);
+      border-radius: 999px;
+      background: rgba(240,216,183,.78);
+      box-shadow: 0 0 0 6px rgba(217,173,115,.08);
+      transform: translate(-50%, -50%);
+      animation: mapPulse 4.6s ease-in-out infinite;
+      transition: transform .25s var(--ease), background .25s ease;
+    }
+
+    .map-point::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      min-width: max-content;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      color: rgba(255,248,239,.86);
+      background: rgba(255,248,239,.08);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transform: translateY(-50%);
+      backdrop-filter: blur(12px);
+      opacity: .42;
+      transition: opacity .25s ease, background .25s ease;
+    }
+
+    .map-point.label-left::after {
+      left: auto;
+      right: 18px;
+    }
+
+    .map-point:hover::after { opacity: 1; }
+
+    .map-brows { --x: 50%; --y: 16%; }
+    .map-lips { --x: 50%; --y: 26%; }
+    .map-scars { --x: 62%; --y: 22%; }
+    .map-vitiligo { --x: 50%; --y: 42%; }
+    .map-stretch { --x: 50%; --y: 72%; }
+
+    .map-point.active {
+      background: var(--champagne-2);
+      transform: translate(-50%, -50%) scale(1.18);
+      animation: none;
+      box-shadow: 0 0 0 8px rgba(217,173,115,.12), 0 0 28px rgba(240,216,183,.22);
+    }
+
+    .map-point.active::after {
+      opacity: 1;
+      background: rgba(255,248,239,.16);
+    }
+
+    .map-point.hidden { display: none; }
+
+    .map-chips {
+      display: none;
+      grid-column: 1 / -1;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: -4px;
+    }
+
+    .map-chip {
+      min-height: 40px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: #fffaf4;
+      font-size: .78rem;
+      font-weight: 850;
+    }
+
+    .map-chip.active {
+      color: var(--cream);
+      background: var(--rose);
+      border-color: transparent;
+    }
+
+    @keyframes mapPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(217,173,115,.36); }
+      50% { box-shadow: 0 0 0 18px rgba(217,173,115,0); }
+    }
+
+    .map-copy {
+      display: grid;
+      gap: 12px;
+    }
+
+    .map-detail {
+      position: relative;
+      min-height: 360px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden;
+      color: var(--cream);
+      background: linear-gradient(145deg, rgba(20,17,15,.96), rgba(58,36,32,.92));
+      box-shadow: 0 22px 60px rgba(31,20,16,.12);
+    }
+
+    .map-detail::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -80px;
+      width: 230px;
+      height: 230px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(217,173,115,.24), transparent 68%);
+    }
+
+    .map-detail > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .map-detail .label {
+      color: var(--champagne-2);
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .map-detail h3 {
+      margin-top: 24px;
+      font-size: clamp(2.5rem, 4vw, 4.2rem);
+      line-height: .86;
+      letter-spacing: -.045em;
+    }
+
+    .map-detail p {
+      max-width: 420px;
+      color: rgba(255,248,239,.72);
+      line-height: 1.8;
+    }
+
+    .map-detail .btn {
+      margin-top: 16px;
+      animation: ctaNudge 5.2s ease-in-out infinite;
+    }
+
+    @keyframes ctaNudge {
+      0%, 78%, 100% { transform: translateX(0); }
+      84% { transform: translateX(5px); }
+      90% { transform: translateX(0); }
+      95% { transform: translateX(3px); }
+    }
+
+    .map-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,250,244,.84);
+      transition: transform .3s var(--ease), border-color .3s ease, box-shadow .3s ease;
+    }
+
+    .map-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124,59,63,.28);
+      box-shadow: 0 20px 56px rgba(31,20,16,.1);
+    }
+
+    .map-card strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.7rem;
+      line-height: .92;
+    }
+
+    .map-card span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.65;
+    }
+
     .results-wall {
       display: grid;
       grid-template-columns: 1.25fr .75fr;
@@ -1473,7 +1723,7 @@
       .strip-item:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.16); }
       .feature-panel { min-height: 460px; }
       .treatment-grid, .reviews, .suite-grid, .trust-runway, .insta-wall { grid-template-columns: 1fr 1fr; }
-      .quiz-shell, .comparison { grid-template-columns: 1fr; }
+      .quiz-shell, .comparison, .treatment-map { grid-template-columns: 1fr; }
       .journey { grid-template-columns: 1fr 1fr; }
       .booking-copy { min-height: 460px; }
     }
@@ -1484,9 +1734,12 @@
       .brand strong { font-size: 1.1rem; }
       .brand span { font-size: .55rem; letter-spacing: .16em; }
       .hero { min-height: 92vh; }
-      h1 { font-size: clamp(3.5rem, 18vw, 5.7rem); }
-      h1 span { transform: translateX(18px); }
-      .hero-inner { width: calc(100% - 28px); padding-bottom: 34px; }
+      h1 { font-size: clamp(3.25rem, 16vw, 5.2rem); }
+      h1 span { transform: translateX(12px); }
+      h2 { font-size: clamp(2.35rem, 13vw, 4.2rem); }
+      .hero-copy { font-size: .98rem; line-height: 1.72; }
+      .hero-inner { width: calc(100% - 28px); padding: 112px 0 34px; gap: 24px; }
+      .hero-proof { display: none; }
       .hero-actions .btn { width: 100%; }
       .hero-strip {
         width: calc(100% - 28px);
@@ -1502,13 +1755,20 @@
         flex-direction: column;
       }
       .treatment-grid, .reviews, .journey, .suite-grid, .trust-runway, .quiz-options, .insta-wall { grid-template-columns: 1fr; }
+      .map-figure { min-height: 500px; }
+      .map-point::after { display: none; }
+      .map-chips { display: flex; }
+      .map-tabs { gap: 6px; }
+      .map-tab { flex: 1; min-width: 0; padding: 0 10px; font-size: .68rem; }
       .result-large, .result-stack article { min-height: 360px; }
       .compare-frame { min-height: 360px; }
       .booking-shell { padding: 10px; border-radius: 26px; }
-      .booking-copy { min-height: 430px; padding: 24px; }
+      .booking-copy { min-height: 390px; padding: 24px; }
       .book-form { padding: 20px; }
       .book-form h3 { font-size: 1.9rem; }
-      .concierge { left: 12px; right: 12px; bottom: 12px; width: auto; }
+      .concierge { left: 12px; right: 12px; bottom: 12px; width: auto; padding: 12px; }
+      .concierge p { display: none; }
+      .concierge-actions .btn { min-height: 40px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1550,7 +1810,7 @@
         <div class="reveal visible">
           <div class="eyebrow">Paramedical Micropigmentation | Islamabad</div>
           <h1>Huma Arshad <span>Aesthetics</span></h1>
-          <p class="hero-copy">A private corrective beauty studio for skin confidence, natural restoration, and precision pigment work. Scar revision, vitiligo camouflage, lip correction, brows, and skin therapy delivered with clinical calm and an artist's eye.</p>
+          <p class="hero-copy">Correct what skin remembers. Restore tone, soften visible marks, and refine features with private corrective beauty care in Islamabad.</p>
           <div class="hero-actions">
             <a class="btn btn-light magnetic" href="#booking">Reserve Private Consultation</a>
             <a class="btn btn-ghost btn-hero-outline magnetic" href="#results">See Client Results</a>
@@ -1580,9 +1840,9 @@
         <div class="section-head reveal">
           <div>
             <div class="kicker">Signature standard</div>
-            <h2>Quiet luxury, built around <em>visible confidence.</em></h2>
+            <h2>Corrective artistry for <em>quiet confidence.</em></h2>
           </div>
-          <p class="section-copy">A private studio experience shaped around precision, discretion, and natural-looking restoration for clients who want expert corrective beauty care.</p>
+          <p class="section-copy">Discreet treatment planning, refined pigment work, and natural-looking restoration for skin, lips, brows, scars, and tone concerns.</p>
         </div>
 
         <div class="signature-grid">
@@ -1633,9 +1893,9 @@
         <div class="section-head reveal">
           <div>
             <div class="kicker">Treatment house</div>
-            <h2>One studio. Three premium <em>transformation paths.</em></h2>
+            <h2>Restoration, refinement, and <em>skin renewal.</em></h2>
           </div>
-          <p class="section-copy">Choose the path that fits your concern: corrective restoration, cosmetic refinement, or advanced skin renewal.</p>
+          <p class="section-copy">Each treatment path starts with skin assessment, undertone reading, and a plan built around your comfort and healing.</p>
         </div>
 
         <div class="treatment-grid">
@@ -1695,7 +1955,7 @@
         <div class="quiz-shell reveal" id="quiz">
           <div class="quiz-panel">
             <div class="kicker">Treatment quiz</div>
-            <h2 class="quiz-heading">What do you want to change?</h2>
+            <h2 class="quiz-heading">Where should we begin?</h2>
             <div class="quiz-options">
               <button class="quiz-option active" type="button" data-quiz-service="Scar Revision" data-quiz-title="Restoration consult" data-quiz-copy="Best starting point for scars, surgical marks, acne texture, and stretch mark camouflage. Huma reviews skin history before recommending treatment.">Scars or marks<span>Texture, surgical marks, acne scars</span></button>
               <button class="quiz-option" type="button" data-quiz-service="Dark Lips Correction" data-quiz-title="Lip correction consult" data-quiz-copy="Best for dark lips, uneven tone, or a softer lip blush result. Consultation confirms undertone and session plan.">Dark lips<span>Neutralization, blush, tone balance</span></button>
@@ -1709,6 +1969,52 @@
             <a class="btn btn-light magnetic" href="#booking" id="quizCta" data-service="Scar Revision">Book this path</a>
           </div>
         </div>
+
+        <div class="treatment-map reveal" id="treatment-map">
+          <div class="map-tabs" aria-label="Treatment map categories">
+            <button class="map-tab active" type="button" data-map-tab="face">Face</button>
+            <button class="map-tab" type="button" data-map-tab="body">Body</button>
+            <button class="map-tab" type="button" data-map-tab="skin">Skin</button>
+          </div>
+          <div class="map-figure" aria-label="Animated treatment map">
+            <div class="body-line">
+              <svg viewBox="0 0 420 620" role="img" aria-label="Face and body treatment silhouette">
+                <defs>
+                  <linearGradient id="lineGold" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#f0d8b7"/>
+                    <stop offset="1" stop-color="#d9ad73"/>
+                  </linearGradient>
+                </defs>
+                <path d="M210 76c-54 0-93 42-93 96 0 40 18 72 45 90v44c-66 16-112 63-128 138-9 42-12 82-13 118h378c-1-36-4-76-13-118-16-75-62-122-128-138v-44c27-18 45-50 45-90 0-54-39-96-93-96Z" fill="none" stroke="url(#lineGold)" stroke-width="3"/>
+                <path d="M151 183c31 20 88 20 119 0M172 151c12-8 26-8 39 0M210 152c10 30 8 56-8 78" fill="none" stroke="rgba(255,248,239,.42)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M130 350c42 34 118 34 160 0M92 490h236" fill="none" stroke="rgba(255,248,239,.22)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <button class="map-point map-brows active" data-map-group="face" data-label="Brows" data-service="Powder Brows & Microblading" data-map-title="Brows, softly defined" data-map-copy="Powder brows and microblading refine shape, density, and balance while keeping the result soft and wearable." type="button"></button>
+            <button class="map-point map-lips" data-map-group="face" data-label="Lips" data-service="Dark Lips Correction" data-map-title="Lip tone correction" data-map-copy="Dark lips correction and blush work are planned around undertone, healing, and gradual softness." type="button"></button>
+            <button class="map-point map-scars label-left" data-map-group="skin" data-label="Scars" data-service="Scar Revision" data-map-title="Scar revision planning" data-map-copy="Scar work starts with maturity, texture, tone, and location. Huma assesses what can be softened realistically." type="button"></button>
+            <button class="map-point map-vitiligo label-left hidden" data-map-group="body" data-label="Vitiligo" data-service="Vitiligo Camouflage" data-map-title="Vitiligo camouflage" data-map-copy="Camouflage work requires careful pigment matching, area assessment, and consultation-led expectations." type="button"></button>
+            <button class="map-point map-stretch hidden" data-map-group="body" data-label="Stretch marks" data-service="Stretch Mark Camouflage" data-map-title="Stretch mark camouflage" data-map-copy="Body camouflage can soften contrast and restore visual balance when the skin is suitable for treatment." type="button"></button>
+          </div>
+          <div class="map-chips" aria-label="Treatment map quick choices">
+            <button class="map-chip active" type="button" data-map-chip="Powder Brows & Microblading">Brows</button>
+            <button class="map-chip" type="button" data-map-chip="Dark Lips Correction">Lips</button>
+            <button class="map-chip" type="button" data-map-chip="Scar Revision">Scars</button>
+            <button class="map-chip" type="button" data-map-chip="Vitiligo Camouflage">Vitiligo</button>
+            <button class="map-chip" type="button" data-map-chip="Stretch Mark Camouflage">Stretch marks</button>
+          </div>
+          <div class="map-copy">
+            <article class="map-detail">
+              <span class="label" id="mapDetailLabel">Face treatment</span>
+              <h3 id="mapDetailTitle">Brows, softly defined</h3>
+              <p id="mapDetailCopy">Powder brows and microblading refine shape, density, and balance while keeping the result soft and wearable.</p>
+              <a class="btn btn-light magnetic" id="mapDetailCta" href="#booking" data-service="Powder Brows & Microblading">Book brow consult -></a>
+            </article>
+            <article class="map-card"><strong>Face</strong><span>Brows, lips, eyeliner, acne scarring, pigmentation, and delicate facial scar work.</span></article>
+            <article class="map-card"><strong>Body</strong><span>Stretch marks, trauma marks, surgical scars, tone correction, and camouflage planning.</span></article>
+            <article class="map-card"><strong>Skin</strong><span>Microneedling, glow treatments, texture refinement, pores, fine lines, and scalp confidence.</span></article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1717,7 +2023,7 @@
         <div class="section-head reveal">
           <div>
             <div class="kicker">Client proof</div>
-            <h2>Results with <em>texture, tone, and trust.</em></h2>
+            <h2>Results that respect <em>your skin.</em></h2>
           </div>
           <p class="section-copy">Every concern is personal. Results begin with careful assessment, realistic planning, and work tailored to your skin.</p>
         </div>
@@ -1770,9 +2076,9 @@
         <div class="section-head reveal">
           <div>
             <div class="kicker">Private experience</div>
-            <h2>A calmer path from concern to <em>confidence.</em></h2>
+            <h2>Private care, from first concern to <em>final refinement.</em></h2>
           </div>
-          <p class="section-copy">Premium does not mean loud. It means the client feels handled from first touch through aftercare.</p>
+          <p class="section-copy">Every appointment is paced around comfort, clarity, and realistic healing.</p>
         </div>
         <div class="journey">
           <article class="journey-step reveal"><span>01</span><h3>Listen</h3><p>Concern, skin history, expectations, and timeline are understood before treatment is suggested.</p></article>
@@ -1788,9 +2094,9 @@
         <div class="section-head reveal">
           <div>
             <div class="kicker">Client words</div>
-            <h2>Luxury is when clients feel <em>seen.</em></h2>
+            <h2>Clients come for correction. They leave with <em>ease.</em></h2>
           </div>
-          <p class="section-copy">Social proof is presented as editorial quotes, not noisy review blocks.</p>
+          <p class="section-copy">Real words from clients who trusted the process.</p>
         </div>
         <div class="reviews">
           <article class="review reveal"><p>"This is the first time a procedure has really worked on my acne scars and pigmentation."</p><footer>Scar and pigmentation client</footer></article>
@@ -1812,7 +2118,7 @@
         <div class="section-head reveal">
           <div>
             <div class="kicker">Client questions</div>
-            <h2>Know before you <em>book.</em></h2>
+            <h2>Before your private <em>consultation.</em></h2>
           </div>
           <p class="section-copy">A few important details before booking your private consultation.</p>
         </div>
@@ -1942,6 +2248,52 @@
         compareFrame.style.setProperty("--compare", `${compareRange.value}%`);
       });
     }
+
+    const mapTabs = document.querySelectorAll("[data-map-tab]");
+    const mapPoints = document.querySelectorAll(".map-point");
+    const mapChips = document.querySelectorAll("[data-map-chip]");
+    const mapDetailLabel = document.getElementById("mapDetailLabel");
+    const mapDetailTitle = document.getElementById("mapDetailTitle");
+    const mapDetailCopy = document.getElementById("mapDetailCopy");
+    const mapDetailCta = document.getElementById("mapDetailCta");
+
+    function setMapPoint(point) {
+      if (!point) return;
+      mapPoints.forEach((item) => item.classList.toggle("active", item === point));
+      mapChips.forEach((item) => item.classList.toggle("active", item.dataset.mapChip === point.dataset.service));
+
+      mapDetailLabel.textContent = `${point.dataset.mapGroup} treatment`;
+      mapDetailTitle.textContent = point.dataset.mapTitle;
+      mapDetailCopy.textContent = point.dataset.mapCopy;
+      mapDetailCta.textContent = `Book ${point.dataset.label.toLowerCase()} consult ->`;
+      mapDetailCta.dataset.service = point.dataset.service;
+      document.getElementById("fservice").value = point.dataset.service;
+    }
+
+    function setMapGroup(group) {
+      mapTabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.mapTab === group));
+      mapPoints.forEach((point) => point.classList.toggle("hidden", point.dataset.mapGroup !== group));
+      const activeInGroup = Array.from(mapPoints).find((point) => point.dataset.mapGroup === group && point.classList.contains("active"));
+      const firstInGroup = Array.from(mapPoints).find((point) => point.dataset.mapGroup === group);
+      setMapPoint(activeInGroup || firstInGroup);
+    }
+
+    mapTabs.forEach((tab) => {
+      tab.addEventListener("click", () => setMapGroup(tab.dataset.mapTab));
+    });
+
+    mapPoints.forEach((point) => {
+      point.addEventListener("click", () => setMapPoint(point));
+    });
+
+    mapChips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const point = Array.from(mapPoints).find((item) => item.dataset.service === chip.dataset.mapChip);
+        if (!point) return;
+        setMapGroup(point.dataset.mapGroup);
+        setMapPoint(point);
+      });
+    });
 
     const quizTitle = document.getElementById("quizTitle");
     const quizCopy = document.getElementById("quizCopy");
