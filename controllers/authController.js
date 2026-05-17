@@ -6,11 +6,33 @@ async function loginAdmin(req, res) {
   try {
     const email = String(req.body.email || "").trim().toLowerCase();
     const password = String(req.body.password || "");
+    const envAdminEmail = String(process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+    const envAdminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 
     if (!email || !password) {
       return res.status(400).json({
         success: false,
         message: "Email and password are required."
+      });
+    }
+
+    if (
+      envAdminEmail &&
+      envAdminPasswordHash &&
+      email === envAdminEmail &&
+      (await bcrypt.compare(password, envAdminPasswordHash))
+    ) {
+      return res.status(200).json({
+        success: true,
+        message: "Admin login successful.",
+        token: generateToken("env-admin"),
+        admin: {
+          id: "env-admin",
+          email: envAdminEmail,
+          fullName: process.env.ADMIN_FULL_NAME || "Huma Arshad Admin",
+          role: "admin",
+          createdAt: null
+        }
       });
     }
 
@@ -54,4 +76,3 @@ module.exports = {
   loginAdmin,
   getCurrentAdmin
 };
-

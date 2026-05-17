@@ -14,6 +14,18 @@ async function protectAdmin(req, res, next) {
 
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded.id === "env-admin" && process.env.ADMIN_EMAIL) {
+      req.admin = {
+        id: "env-admin",
+        email: process.env.ADMIN_EMAIL,
+        fullName: process.env.ADMIN_FULL_NAME || "Huma Arshad Admin",
+        role: "admin",
+        createdAt: null
+      };
+      return next();
+    }
+
     const admin = await findById("admins", decoded.id);
 
     if (!admin || admin.role !== "admin") {
@@ -40,4 +52,3 @@ async function protectAdmin(req, res, next) {
 }
 
 module.exports = { protectAdmin };
-
