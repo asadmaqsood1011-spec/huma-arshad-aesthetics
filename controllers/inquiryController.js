@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const ContactInquiry = require("../models/ContactInquiry");
+const { create, deleteById, findById, isUuid, list, updateById } = require("../utils/supabaseData");
 const { sendInquiryNotification } = require("../utils/sendEmail");
 
 const allowedStatuses = ["unread", "read", "replied"];
@@ -21,7 +20,7 @@ async function createInquiry(req, res) {
       });
     }
 
-    const inquiry = await ContactInquiry.create(payload);
+    const inquiry = await create("inquiries", payload);
 
     try {
       await sendInquiryNotification(inquiry);
@@ -35,6 +34,7 @@ async function createInquiry(req, res) {
       data: inquiry
     });
   } catch (error) {
+    console.error("Create inquiry failed:", error.message);
     return res.status(500).json({
       success: false,
       message: "Unable to create contact inquiry."
@@ -50,7 +50,10 @@ async function getInquiries(req, res) {
       filters.status = req.query.status;
     }
 
-    const inquiries = await ContactInquiry.find(filters).sort({ createdAt: -1 });
+    const inquiries = await list("inquiries", {
+      filters,
+      order: [{ column: "created_at", ascending: false }]
+    });
 
     return res.status(200).json({
       success: true,
@@ -69,14 +72,14 @@ async function getInquiryById(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid inquiry id."
       });
     }
 
-    const inquiry = await ContactInquiry.findById(id);
+    const inquiry = await findById("inquiries", id);
 
     if (!inquiry) {
       return res.status(404).json({
@@ -102,7 +105,7 @@ async function updateInquiryStatus(req, res) {
     const { id } = req.params;
     const status = String(req.body.status || "").trim();
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid inquiry id."
@@ -116,11 +119,7 @@ async function updateInquiryStatus(req, res) {
       });
     }
 
-    const inquiry = await ContactInquiry.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true, runValidators: true }
-    );
+    const inquiry = await updateById("inquiries", id, { status });
 
     if (!inquiry) {
       return res.status(404).json({
@@ -146,14 +145,14 @@ async function deleteInquiry(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid inquiry id."
       });
     }
 
-    const inquiry = await ContactInquiry.findByIdAndDelete(id);
+    const inquiry = await deleteById("inquiries", id);
 
     if (!inquiry) {
       return res.status(404).json({
@@ -181,3 +180,4 @@ module.exports = {
   updateInquiryStatus,
   deleteInquiry
 };
+

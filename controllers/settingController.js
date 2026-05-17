@@ -1,8 +1,8 @@
-const SiteSetting = require("../models/SiteSetting");
+const { create, findOne, updateById } = require("../utils/supabaseData");
 
 async function getPublicSettings(req, res) {
   try {
-    const settings = await SiteSetting.findOne().sort({ createdAt: -1 });
+    const settings = await findOne("settings", {}, [{ column: "created_at", ascending: false }]);
 
     return res.status(200).json({
       success: true,
@@ -35,12 +35,10 @@ async function updateSettings(req, res) {
       }
     });
 
-    const settings = await SiteSetting.findOneAndUpdate({}, payload, {
-      new: true,
-      upsert: true,
-      runValidators: true,
-      setDefaultsOnInsert: true
-    });
+    const existingSettings = await findOne("settings", {}, [{ column: "created_at", ascending: false }]);
+    const settings = existingSettings
+      ? await updateById("settings", existingSettings._id, payload)
+      : await create("settings", payload);
 
     return res.status(200).json({
       success: true,
@@ -59,3 +57,4 @@ module.exports = {
   getPublicSettings,
   updateSettings
 };
+

@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Service = require("../models/Service");
+const { create, deleteById, findById, findOne, isUuid, list, updateById } = require("../utils/supabaseData");
 
 function slugify(input) {
   return String(input || "")
@@ -11,9 +10,12 @@ function slugify(input) {
 
 async function getPublicServices(req, res) {
   try {
-    const services = await Service.find({ active: true }).sort({
-      displayOrder: 1,
-      createdAt: -1
+    const services = await list("services", {
+      filters: { active: true },
+      order: [
+        { column: "display_order", ascending: true },
+        { column: "created_at", ascending: false }
+      ]
     });
 
     return res.status(200).json({
@@ -31,9 +33,11 @@ async function getPublicServices(req, res) {
 
 async function getAdminServices(req, res) {
   try {
-    const services = await Service.find().sort({
-      displayOrder: 1,
-      createdAt: -1
+    const services = await list("services", {
+      order: [
+        { column: "display_order", ascending: true },
+        { column: "created_at", ascending: false }
+      ]
     });
 
     return res.status(200).json({
@@ -52,11 +56,9 @@ async function getAdminServices(req, res) {
 async function getPublicService(req, res) {
   try {
     const { identifier } = req.params;
-    const query = mongoose.isValidObjectId(identifier)
-      ? { _id: identifier, active: true }
-      : { slug: identifier.toLowerCase(), active: true };
-
-    const service = await Service.findOne(query);
+    const service = isUuid(identifier)
+      ? await findById("services", identifier, { active: true })
+      : await findOne("services", { slug: identifier.toLowerCase(), active: true });
 
     if (!service) {
       return res.status(404).json({
@@ -89,7 +91,7 @@ async function createService(req, res) {
       });
     }
 
-    const existingService = await Service.findOne({ slug });
+    const existingService = await findOne("services", { slug });
 
     if (existingService) {
       return res.status(409).json({
@@ -98,7 +100,7 @@ async function createService(req, res) {
       });
     }
 
-    const service = await Service.create({
+    const service = await create("services", {
       title,
       slug,
       shortDescription: String(req.body.shortDescription || "").trim(),
@@ -127,59 +129,35 @@ async function updateService(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid service id."
       });
     }
 
-    const service = await Service.findById(id);
+    const existing = await findById("services", id);
 
-    if (!service) {
+    if (!existing) {
       return res.status(404).json({
         success: false,
         message: "Service not found."
       });
     }
 
-    if (req.body.title !== undefined) {
-      service.title = String(req.body.title).trim();
-    }
+    const payload = {};
 
-    if (req.body.slug !== undefined || req.body.title !== undefined) {
-      service.slug = slugify(req.body.slug || service.title);
-    }
+    if (req.body.title !== undefined) payload.title = String(req.body.title).trim();
+    if (req.body.slug !== undefined || req.body.title !== undefined) payload.slug = slugify(req.body.slug || payload.title || existing.title);
+    if (req.body.shortDescription !== undefined) payload.shortDescription = String(req.body.shortDescription).trim();
+    if (req.body.fullDescription !== undefined) payload.fullDescription = String(req.body.fullDescription).trim();
+    if (req.body.category !== undefined) payload.category = String(req.body.category).trim();
+    if (req.body.tags !== undefined) payload.tags = Array.isArray(req.body.tags) ? req.body.tags : existing.tags;
+    if (req.body.featured !== undefined) payload.featured = Boolean(req.body.featured);
+    if (req.body.active !== undefined) payload.active = Boolean(req.body.active);
+    if (req.body.displayOrder !== undefined) payload.displayOrder = Number(req.body.displayOrder);
 
-    if (req.body.shortDescription !== undefined) {
-      service.shortDescription = String(req.body.shortDescription).trim();
-    }
-
-    if (req.body.fullDescription !== undefined) {
-      service.fullDescription = String(req.body.fullDescription).trim();
-    }
-
-    if (req.body.category !== undefined) {
-      service.category = String(req.body.category).trim();
-    }
-
-    if (req.body.tags !== undefined) {
-      service.tags = Array.isArray(req.body.tags) ? req.body.tags : service.tags;
-    }
-
-    if (req.body.featured !== undefined) {
-      service.featured = Boolean(req.body.featured);
-    }
-
-    if (req.body.active !== undefined) {
-      service.active = Boolean(req.body.active);
-    }
-
-    if (req.body.displayOrder !== undefined) {
-      service.displayOrder = Number(req.body.displayOrder);
-    }
-
-    await service.save();
+    const service = await updateById("services", id, payload);
 
     return res.status(200).json({
       success: true,
@@ -187,7 +165,7 @@ async function updateService(req, res) {
       data: service
     });
   } catch (error) {
-    if (error.code === 11000) {
+    if (error.code === "23505") {
       return res.status(409).json({
         success: false,
         message: "A service with this slug already exists."
@@ -205,14 +183,14 @@ async function deleteService(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid service id."
       });
     }
 
-    const service = await Service.findByIdAndDelete(id);
+    const service = await deleteById("services", id);
 
     if (!service) {
       return res.status(404).json({
@@ -241,3 +219,4 @@ module.exports = {
   updateService,
   deleteService
 };
+

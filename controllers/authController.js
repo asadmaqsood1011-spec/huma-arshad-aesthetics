@@ -1,4 +1,5 @@
-const Admin = require("../models/Admin");
+const bcrypt = require("bcryptjs");
+const { findOne } = require("../utils/supabaseData");
 const generateToken = require("../utils/generateToken");
 
 async function loginAdmin(req, res) {
@@ -13,9 +14,9 @@ async function loginAdmin(req, res) {
       });
     }
 
-    const admin = await Admin.findOne({ email });
+    const admin = await findOne("admins", { email });
 
-    if (!admin || !(await admin.matchPassword(password))) {
+    if (!admin || !(await bcrypt.compare(password, admin.passwordHash))) {
       return res.status(401).json({
         success: false,
         message: "Invalid admin credentials."
@@ -53,3 +54,4 @@ module.exports = {
   loginAdmin,
   getCurrentAdmin
 };
+

@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+require("./config/env");
 
 const app = require("./app");
 

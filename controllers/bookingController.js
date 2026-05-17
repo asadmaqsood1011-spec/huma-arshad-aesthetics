@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const BookingRequest = require("../models/BookingRequest");
+const { create, deleteById, findById, isUuid, list, updateById } = require("../utils/supabaseData");
 const { sendBookingNotification } = require("../utils/sendEmail");
 
 const allowedStatuses = ["pending", "confirmed", "cancelled", "completed"];
@@ -24,7 +23,7 @@ async function createBooking(req, res) {
       });
     }
 
-    const booking = await BookingRequest.create(payload);
+    const booking = await create("bookings", payload);
 
     try {
       await sendBookingNotification(booking);
@@ -38,6 +37,7 @@ async function createBooking(req, res) {
       data: booking
     });
   } catch (error) {
+    console.error("Create booking failed:", error.message);
     return res.status(500).json({
       success: false,
       message: "Unable to create booking request."
@@ -53,7 +53,10 @@ async function getBookings(req, res) {
       filters.status = req.query.status;
     }
 
-    const bookings = await BookingRequest.find(filters).sort({ createdAt: -1 });
+    const bookings = await list("bookings", {
+      filters,
+      order: [{ column: "created_at", ascending: false }]
+    });
 
     return res.status(200).json({
       success: true,
@@ -72,14 +75,14 @@ async function getBookingById(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid booking request id."
       });
     }
 
-    const booking = await BookingRequest.findById(id);
+    const booking = await findById("bookings", id);
 
     if (!booking) {
       return res.status(404).json({
@@ -105,7 +108,7 @@ async function updateBookingStatus(req, res) {
     const { id } = req.params;
     const status = String(req.body.status || "").trim();
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid booking request id."
@@ -119,11 +122,7 @@ async function updateBookingStatus(req, res) {
       });
     }
 
-    const booking = await BookingRequest.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true, runValidators: true }
-    );
+    const booking = await updateById("bookings", id, { status });
 
     if (!booking) {
       return res.status(404).json({
@@ -149,14 +148,14 @@ async function deleteBooking(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid booking request id."
       });
     }
 
-    const booking = await BookingRequest.findByIdAndDelete(id);
+    const booking = await deleteById("bookings", id);
 
     if (!booking) {
       return res.status(404).json({
@@ -184,3 +183,4 @@ module.exports = {
   updateBookingStatus,
   deleteBooking
 };
+

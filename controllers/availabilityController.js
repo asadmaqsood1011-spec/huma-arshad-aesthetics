@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const AvailabilitySlot = require("../models/AvailabilitySlot");
+const { create, deleteById, isUuid, list, updateById } = require("../utils/supabaseData");
 
 async function getPublicAvailability(req, res) {
   try {
@@ -9,15 +8,16 @@ async function getPublicAvailability(req, res) {
       filters.date = String(req.query.date).trim();
     }
 
-    if (req.query.includeUnavailable === "true") {
-      delete filters.available;
-    } else {
+    if (req.query.includeUnavailable !== "true") {
       filters.available = true;
     }
 
-    const slots = await AvailabilitySlot.find(filters).sort({
-      date: 1,
-      time: 1
+    const slots = await list("availability", {
+      filters,
+      order: [
+        { column: "date", ascending: true },
+        { column: "time", ascending: true }
+      ]
     });
 
     return res.status(200).json({
@@ -35,7 +35,12 @@ async function getPublicAvailability(req, res) {
 
 async function getAdminAvailability(req, res) {
   try {
-    const slots = await AvailabilitySlot.find().sort({ date: 1, time: 1 });
+    const slots = await list("availability", {
+      order: [
+        { column: "date", ascending: true },
+        { column: "time", ascending: true }
+      ]
+    });
 
     return res.status(200).json({
       success: true,
@@ -62,7 +67,7 @@ async function createAvailability(req, res) {
       });
     }
 
-    const slot = await AvailabilitySlot.create({
+    const slot = await create("availability", {
       date,
       time,
       available: req.body.available !== undefined ? Boolean(req.body.available) : true
@@ -85,17 +90,14 @@ async function updateAvailability(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid availability slot id."
       });
     }
 
-    const slot = await AvailabilitySlot.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const slot = await updateById("availability", id, req.body);
 
     if (!slot) {
       return res.status(404).json({
@@ -121,14 +123,14 @@ async function deleteAvailability(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid availability slot id."
       });
     }
 
-    const slot = await AvailabilitySlot.findByIdAndDelete(id);
+    const slot = await deleteById("availability", id);
 
     if (!slot) {
       return res.status(404).json({
@@ -156,3 +158,4 @@ module.exports = {
   updateAvailability,
   deleteAvailability
 };
+

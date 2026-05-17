@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const NewsletterLead = require("../models/NewsletterLead");
+const { create, deleteById, findOne, isUuid, list } = require("../utils/supabaseData");
 
 async function subscribeNewsletter(req, res) {
   try {
@@ -13,7 +12,7 @@ async function subscribeNewsletter(req, res) {
       });
     }
 
-    const existingLead = await NewsletterLead.findOne({ email });
+    const existingLead = await findOne("newsletter", { email });
 
     if (existingLead) {
       return res.status(200).json({
@@ -23,7 +22,7 @@ async function subscribeNewsletter(req, res) {
       });
     }
 
-    const lead = await NewsletterLead.create({ email, source });
+    const lead = await create("newsletter", { email, source });
 
     return res.status(201).json({
       success: true,
@@ -40,7 +39,9 @@ async function subscribeNewsletter(req, res) {
 
 async function getNewsletterLeads(req, res) {
   try {
-    const leads = await NewsletterLead.find().sort({ createdAt: -1 });
+    const leads = await list("newsletter", {
+      order: [{ column: "created_at", ascending: false }]
+    });
 
     return res.status(200).json({
       success: true,
@@ -59,14 +60,14 @@ async function deleteNewsletterLead(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid newsletter lead id."
       });
     }
 
-    const lead = await NewsletterLead.findByIdAndDelete(id);
+    const lead = await deleteById("newsletter", id);
 
     if (!lead) {
       return res.status(404).json({
@@ -92,3 +93,4 @@ module.exports = {
   getNewsletterLeads,
   deleteNewsletterLead
 };
+

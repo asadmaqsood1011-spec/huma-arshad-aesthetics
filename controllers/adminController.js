@@ -1,11 +1,4 @@
-const BookingRequest = require("../models/BookingRequest");
-const ContactInquiry = require("../models/ContactInquiry");
-const Service = require("../models/Service");
-const ResultCase = require("../models/ResultCase");
-const Testimonial = require("../models/Testimonial");
-const NewsletterLead = require("../models/NewsletterLead");
-const AvailabilitySlot = require("../models/AvailabilitySlot");
-const SiteSetting = require("../models/SiteSetting");
+const { count, findOne, list } = require("../utils/supabaseData");
 
 async function getDashboardData(req, res) {
   try {
@@ -23,18 +16,18 @@ async function getDashboardData(req, res) {
       recentInquiries,
       settings
     ] = await Promise.all([
-      BookingRequest.countDocuments(),
-      BookingRequest.countDocuments({ status: "pending" }),
-      ContactInquiry.countDocuments(),
-      ContactInquiry.countDocuments({ status: "unread" }),
-      Service.countDocuments(),
-      ResultCase.countDocuments(),
-      Testimonial.countDocuments(),
-      NewsletterLead.countDocuments(),
-      AvailabilitySlot.countDocuments(),
-      BookingRequest.find().sort({ createdAt: -1 }).limit(5),
-      ContactInquiry.find().sort({ createdAt: -1 }).limit(5),
-      SiteSetting.findOne().sort({ createdAt: -1 })
+      count("bookings"),
+      count("bookings", { status: "pending" }),
+      count("inquiries"),
+      count("inquiries", { status: "unread" }),
+      count("services"),
+      count("results"),
+      count("testimonials"),
+      count("newsletter"),
+      count("availability"),
+      list("bookings", { order: [{ column: "created_at", ascending: false }], limit: 5 }),
+      list("inquiries", { order: [{ column: "created_at", ascending: false }], limit: 5 }),
+      findOne("settings", {}, [{ column: "created_at", ascending: false }])
     ]);
 
     return res.status(200).json({
@@ -67,3 +60,4 @@ async function getDashboardData(req, res) {
 module.exports = {
   getDashboardData
 };
+

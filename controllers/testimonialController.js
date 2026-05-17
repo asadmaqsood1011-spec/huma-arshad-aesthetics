@@ -1,11 +1,13 @@
-const mongoose = require("mongoose");
-const Testimonial = require("../models/Testimonial");
+const { create, deleteById, findById, isUuid, list, updateById } = require("../utils/supabaseData");
 
 async function getPublicTestimonials(req, res) {
   try {
-    const testimonials = await Testimonial.find({ published: true }).sort({
-      featured: -1,
-      createdAt: -1
+    const testimonials = await list("testimonials", {
+      filters: { published: true },
+      order: [
+        { column: "featured", ascending: false },
+        { column: "created_at", ascending: false }
+      ]
     });
 
     return res.status(200).json({
@@ -23,7 +25,9 @@ async function getPublicTestimonials(req, res) {
 
 async function getAdminTestimonials(req, res) {
   try {
-    const testimonials = await Testimonial.find().sort({ createdAt: -1 });
+    const testimonials = await list("testimonials", {
+      order: [{ column: "created_at", ascending: false }]
+    });
 
     return res.status(200).json({
       success: true,
@@ -42,14 +46,14 @@ async function getPublicTestimonial(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid testimonial id."
       });
     }
 
-    const testimonial = await Testimonial.findOne({ _id: id, published: true });
+    const testimonial = await findById("testimonials", id, { published: true });
 
     if (!testimonial) {
       return res.status(404).json({
@@ -82,7 +86,7 @@ async function createTestimonial(req, res) {
       });
     }
 
-    const testimonial = await Testimonial.create({
+    const testimonial = await create("testimonials", {
       clientName,
       rating: Number(req.body.rating || 5),
       quote,
@@ -108,17 +112,14 @@ async function updateTestimonial(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid testimonial id."
       });
     }
 
-    const testimonial = await Testimonial.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const testimonial = await updateById("testimonials", id, req.body);
 
     if (!testimonial) {
       return res.status(404).json({
@@ -144,14 +145,14 @@ async function deleteTestimonial(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid testimonial id."
       });
     }
 
-    const testimonial = await Testimonial.findByIdAndDelete(id);
+    const testimonial = await deleteById("testimonials", id);
 
     if (!testimonial) {
       return res.status(404).json({
@@ -180,3 +181,4 @@ module.exports = {
   updateTestimonial,
   deleteTestimonial
 };
+

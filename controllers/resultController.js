@@ -1,11 +1,13 @@
-const mongoose = require("mongoose");
-const ResultCase = require("../models/ResultCase");
+const { create, deleteById, findById, isUuid, list, updateById } = require("../utils/supabaseData");
 
 async function getPublicResults(req, res) {
   try {
-    const results = await ResultCase.find({ published: true }).sort({
-      featured: -1,
-      createdAt: -1
+    const results = await list("results", {
+      filters: { published: true },
+      order: [
+        { column: "featured", ascending: false },
+        { column: "created_at", ascending: false }
+      ]
     });
 
     return res.status(200).json({
@@ -23,7 +25,9 @@ async function getPublicResults(req, res) {
 
 async function getAdminResults(req, res) {
   try {
-    const results = await ResultCase.find().sort({ createdAt: -1 });
+    const results = await list("results", {
+      order: [{ column: "created_at", ascending: false }]
+    });
 
     return res.status(200).json({
       success: true,
@@ -42,14 +46,14 @@ async function getPublicResult(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid result case id."
       });
     }
 
-    const result = await ResultCase.findOne({ _id: id, published: true });
+    const result = await findById("results", id, { published: true });
 
     if (!result) {
       return res.status(404).json({
@@ -82,7 +86,7 @@ async function createResult(req, res) {
       });
     }
 
-    const result = await ResultCase.create({
+    const result = await create("results", {
       title,
       service,
       clientAlias: String(req.body.clientAlias || "").trim(),
@@ -110,17 +114,14 @@ async function updateResult(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid result case id."
       });
     }
 
-    const result = await ResultCase.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const result = await updateById("results", id, req.body);
 
     if (!result) {
       return res.status(404).json({
@@ -146,14 +147,14 @@ async function deleteResult(req, res) {
   try {
     const { id } = req.params;
 
-    if (!mongoose.isValidObjectId(id)) {
+    if (!isUuid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid result case id."
       });
     }
 
-    const result = await ResultCase.findByIdAndDelete(id);
+    const result = await deleteById("results", id);
 
     if (!result) {
       return res.status(404).json({
@@ -182,3 +183,4 @@ module.exports = {
   updateResult,
   deleteResult
 };
+

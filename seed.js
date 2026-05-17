@@ -1,13 +1,7 @@
-const dotenv = require("dotenv");
+require("./config/env");
 
-dotenv.config();
-
-const connectDB = require("./config/db");
-const Admin = require("./models/Admin");
-const Service = require("./models/Service");
-const Testimonial = require("./models/Testimonial");
-const ResultCase = require("./models/ResultCase");
-const SiteSetting = require("./models/SiteSetting");
+const bcrypt = require("bcryptjs");
+const { create, findOne, updateById } = require("./utils/supabaseData");
 
 const servicesSeed = [
   {
@@ -127,61 +121,51 @@ const siteSettingsSeed = {
   bookingLink: "https://www.instagram.com/humachaudhry.aesthetics/"
 };
 
+async function upsertBy(resource, filters, payload) {
+  const existing = await findOne(resource, filters);
+  return existing ? updateById(resource, existing._id, payload) : create(resource, payload);
+}
+
 async function seed() {
-  await connectDB();
-
-  let admin = await Admin.findOne({ email: "admin@humaarshad.com" });
-
-  if (!admin) {
-    admin = new Admin({
-      email: "admin@humaarshad.com",
-      password: "Admin123!",
-      fullName: "Huma Arshad Admin"
-    });
-  } else {
-    admin.fullName = "Huma Arshad Admin";
-    admin.password = "Admin123!";
-  }
-
-  await admin.save();
+  await upsertBy("admins", { email: "admin@humaarshad.com" }, {
+    email: "admin@humaarshad.com",
+    passwordHash: await bcrypt.hash("Admin123!", 10),
+    fullName: "Huma Arshad Admin",
+    role: "admin"
+  });
 
   for (const service of servicesSeed) {
-    await Service.findOneAndUpdate(
-      { slug: service.slug },
-      service,
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    await upsertBy("services", { slug: service.slug }, service);
   }
 
   for (const testimonial of testimonialsSeed) {
-    await Testimonial.findOneAndUpdate(
-      { clientName: testimonial.clientName, quote: testimonial.quote },
-      testimonial,
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const existing = await findOne("testimonials", { client_name: testimonial.clientName });
+    if (!existing) {
+      await create("testimonials", testimonial);
+    }
   }
 
   for (const result of resultsSeed) {
-    await ResultCase.findOneAndUpdate(
-      { title: result.title },
-      result,
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const existing = await findOne("results", { title: result.title });
+    if (!existing) {
+      await create("results", result);
+    }
   }
 
-  await SiteSetting.findOneAndUpdate(
-    {},
-    siteSettingsSeed,
-    { upsert: true, new: true, setDefaultsOnInsert: true }
-  );
+  const settings = await findOne("settings", {}, [{ column: "created_at", ascending: false }]);
+  if (settings) {
+    await updateById("settings", settings._id, siteSettingsSeed);
+  } else {
+    await create("settings", siteSettingsSeed);
+  }
 
   console.log("Seed completed successfully.");
   console.log("Admin email: admin@humaarshad.com");
   console.log("Admin password: Admin123!");
-  process.exit(0);
 }
 
 seed().catch((error) => {
   console.error("Seed failed:", error.message);
   process.exit(1);
 });
+

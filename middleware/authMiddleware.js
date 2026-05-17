@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
+const { findById } = require("../utils/supabaseData");
 
 async function protectAdmin(req, res, next) {
   try {
@@ -14,7 +14,7 @@ async function protectAdmin(req, res, next) {
 
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const admin = await Admin.findById(decoded.id).select("-password");
+    const admin = await findById("admins", decoded.id);
 
     if (!admin || admin.role !== "admin") {
       return res.status(401).json({
@@ -23,7 +23,13 @@ async function protectAdmin(req, res, next) {
       });
     }
 
-    req.admin = admin;
+    req.admin = {
+      id: admin._id,
+      email: admin.email,
+      fullName: admin.fullName,
+      role: admin.role,
+      createdAt: admin.createdAt
+    };
     next();
   } catch (error) {
     return res.status(401).json({
@@ -34,3 +40,4 @@ async function protectAdmin(req, res, next) {
 }
 
 module.exports = { protectAdmin };
+

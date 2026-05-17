@@ -1,9 +1,8 @@
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+require("./config/env");
 
-const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const inquiryRoutes = require("./routes/inquiryRoutes");
@@ -15,8 +14,6 @@ const newsletterRoutes = require("./routes/newsletterRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
-
-dotenv.config();
 
 const app = express();
 const publicDir = path.join(__dirname, "public");
@@ -38,15 +35,6 @@ app.get("/api/health", (req, res) => {
     message: "API is healthy",
     timestamp: new Date().toISOString()
   });
-});
-
-app.use("/api", async (req, res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (error) {
-    next(error);
-  }
 });
 
 app.use("/api/auth", authRoutes);
