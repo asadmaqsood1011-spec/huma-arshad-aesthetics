@@ -260,6 +260,7 @@
     .panel-grid { display: grid; gap: 18px; }
     .actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .hidden { display: none !important; }
+    .admin-advanced-pane { display: none !important; }
 
     @media (max-width: 1080px) {
       .dashboard-layout,
@@ -308,17 +309,12 @@
     <section class="dashboard-layout hidden" id="dashboardView">
       <aside class="sidebar">
         <h2 id="adminName">Welcome</h2>
-        <p>Use the dashboard sections below to manage the business content and incoming client requests.</p>
+        <p>Use the dashboard sections below to manage live consultation requests and public contact settings.</p>
         <div class="nav-list">
           <button class="nav-item active" data-section="overview">Overview</button>
           <button class="nav-item" data-section="bookings">Bookings</button>
           <button class="nav-item" data-section="inquiries">Inquiries</button>
-          <button class="nav-item" data-section="services">Services</button>
-          <button class="nav-item" data-section="results">Results</button>
-          <button class="nav-item" data-section="testimonials">Testimonials</button>
           <button class="nav-item" data-section="settings">Settings</button>
-          <button class="nav-item" data-section="newsletter">Newsletter</button>
-          <button class="nav-item" data-section="availability">Availability</button>
         </div>
       </aside>
 
@@ -358,7 +354,7 @@
           <div class="table-wrap"><table id="inquiriesTable"></table></div>
         </section>
 
-        <section class="panel section-pane hidden" data-pane="services">
+        <section class="panel section-pane hidden admin-advanced-pane" data-pane="services">
           <div class="section-head">
             <div>
               <h2 class="section-title">Services</h2>
@@ -384,7 +380,7 @@
           </div>
         </section>
 
-        <section class="panel section-pane hidden" data-pane="results">
+        <section class="panel section-pane hidden admin-advanced-pane" data-pane="results">
           <div class="section-head">
             <div>
               <h2 class="section-title">Result Cases</h2>
@@ -410,7 +406,7 @@
           </div>
         </section>
 
-        <section class="panel section-pane hidden" data-pane="testimonials">
+        <section class="panel section-pane hidden admin-advanced-pane" data-pane="testimonials">
           <div class="section-head">
             <div>
               <h2 class="section-title">Testimonials</h2>
@@ -462,7 +458,7 @@
           </form>
         </section>
 
-        <section class="panel section-pane hidden" data-pane="newsletter">
+        <section class="panel section-pane hidden admin-advanced-pane" data-pane="newsletter">
           <div class="section-head">
             <div>
               <h2 class="section-title">Newsletter Leads</h2>
@@ -473,7 +469,7 @@
           <div class="table-wrap"><table id="newsletterTable"></table></div>
         </section>
 
-        <section class="panel section-pane hidden" data-pane="availability">
+        <section class="panel section-pane hidden admin-advanced-pane" data-pane="availability">
           <div class="section-head">
             <div>
               <h2 class="section-title">Availability</h2>
@@ -616,9 +612,9 @@
         const counts = payload.data.counts;
         document.getElementById("overviewStats").innerHTML = [
           { label: "Bookings", value: counts.bookings },
-          { label: "Unread Inquiries", value: counts.unreadInquiries },
-          { label: "Services", value: counts.services },
-          { label: "Newsletter Leads", value: counts.newsletterLeads }
+          { label: "Pending Bookings", value: counts.pendingBookings },
+          { label: "Inquiries", value: counts.inquiries },
+          { label: "Unread Inquiries", value: counts.unreadInquiries }
         ].map((item) => "<div class='stat-card'><strong>" + item.value + "</strong><span>" + item.label + "</span></div>").join("");
       }
 
@@ -760,12 +756,7 @@
           loadOverview(),
           loadBookings(),
           loadInquiries(),
-          loadServices(),
-          loadResults(),
-          loadTestimonials(),
-          loadSettings(),
-          loadNewsletter(),
-          loadAvailability()
+          loadSettings()
         ]);
       }
 

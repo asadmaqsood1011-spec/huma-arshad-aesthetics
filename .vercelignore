@@ -1,4 +1,7 @@
 .env
+.env.local
 node_modules
 data
 start-server.bat
+ai-before-after
+*.log
