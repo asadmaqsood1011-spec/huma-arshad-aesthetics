@@ -2516,20 +2516,31 @@
 
     const countEl = document.querySelector("[data-count]");
     if (countEl && !prefersReduced) {
+      let started = false;
+      const runCount = () => {
+        if (started) return;
+        started = true;
+        const target = Number(countEl.dataset.count);
+        const start = performance.now();
+        const duration = 1600;
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 2); // easeOutQuad — visible tail
+          countEl.textContent = `${Math.round(target * eased).toLocaleString()}+`;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      };
       const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const target = Number(countEl.dataset.count);
-          const start = performance.now();
-          const duration = 1400;
-          function tick(now) {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            countEl.textContent = `${Math.round(target * eased).toLocaleString()}+`;
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
           counterObserver.disconnect();
+          const fo = document.querySelector(".film-opening");
+          const introUp = fo && getComputedStyle(fo).display !== "none" && Number(getComputedStyle(fo).opacity) > 0.01;
+          // If the intro curtain (~2.45s) is up, start counting partway through it
+          // so the number is already mid-count when the gate lifts, then settles.
+          if (introUp) setTimeout(runCount, 1800);
+          else runCount();
         });
       }, { threshold: 0.5 });
       counterObserver.observe(countEl);
